@@ -26,3 +26,10 @@
 .navbarBtn:hover {
     background-color: rgba(0, 0, 0, 0.5);
 }
+#popup {
+    display: none;
+}
+
+.show {
+    display: block;
+}
