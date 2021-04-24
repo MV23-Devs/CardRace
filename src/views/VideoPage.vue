@@ -3,42 +3,31 @@
   <div id="VideoPage">
     <VideoChat id="vidChat" msg="Flash Study" />
 
-    <div id="chooseCollection">
-      <h3>Choose Collection to Submit</h3>
-      <select id="DropdownMenu" v-model="current" @change.prevent="opened">
-        <option
-          id="DropdownOptions"
-          v-for="item in collections"
-          :key="item.name"
-        >
-          {{ item.name }}
-        </option>
-      </select>
-    </div>
+    
 
     <div id="notVideo">
       <!-- mute -->
-      <v-btn id="muteButton" class="iconButtons" v-if="micOn" v-on:click="mute"
+      <button id="muteButton" class="iconButtons" v-if="micOn" v-on:click="mute"
         ><img src="../assets/microphone.png" width="24" height="24"
-      /></v-btn>
-      <v-btn id="muteButton" class="iconButtons" v-else v-on:click="mute"
+      /></button>
+      <button id="muteButton" class="iconButtons" v-else v-on:click="mute"
         ><img src="../assets/microphone-off.png" width="24" height="24"
-      /></v-btn>
+      /></button>
       <!-- video  -->
-      <v-btn
+      <button
         id="cameraButton"
         class="iconButtons"
         v-if="camOn"
         v-on:click="cameraFlip"
         ><img src="../assets/camera.png" width="24" height="24"
-      /></v-btn>
-      <v-btn
+      /></button>
+      <button
         id="cameraButton"
         class="iconButtons"
         v-else
         v-on:click="cameraFlip"
         ><img src="../assets/camera-off.png" width="24" height="24"
-      /></v-btn>
+      /></button>
       
     </div>
   </div>
@@ -56,7 +45,7 @@ export default {
   },
 
   mounted() {
-    this.load();
+    // this.load();
 
     // if (firebase.auth().currentUser) {
     //   firebase

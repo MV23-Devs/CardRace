@@ -4,12 +4,12 @@
     <div class="agora-box" id="MainBox">
 
       <div class="agora-input">
-        <div class="agora-text">* Channel Name</div>
-        <!-- <el-input
+        <div class="agora-text">Channel: {{option.channel}}</div>
+        <!-- <input
           v-model="option.channel"
           placeholder="Channel Name"
           clearable
-        ></el-input> -->
+        ></input> -->
       </div>
 
       <div class="agora-button">
@@ -74,7 +74,7 @@ export default {
   methods: {
     disableVideo() {},
     joinEvent() {
-      document.getElementById("MainBox").style.display = "none";
+      //   document.getElementById("MainBox").style.display = "none";
       this.$parent.showNotVideo();
 
       if (!this.option.appid) {
@@ -93,7 +93,7 @@ export default {
             message: "Join Success",
             type: "success",
           });
-         
+
           this.rtc
             .publishStream()
             .then((stream) => {
@@ -112,7 +112,7 @@ export default {
           this.$message.error("Join Failure");
           log("join channel error", err);
         });
-      this.disableJoin = true;
+      this.disableJoin = false;
       console.log("disableJoin = true");
     },
     leaveEvent() {
@@ -126,8 +126,6 @@ export default {
             message: "Leave Success",
             type: "success",
           });
-        
-        
         })
         .catch((err) => {
           this.$message.error("Leave Failure");
@@ -217,15 +215,7 @@ export default {
   height: 480px;
   margin: 20px;
 }
-.agora-video > div {
-  width: 640px;
-  height: 480px;
-  padding: 0px;
-  margin: auto;
-  background-color: red;
-  position: relative !important;
-  overflow: visible;
-}
+
 
 .agora-input {
   margin: 20px;

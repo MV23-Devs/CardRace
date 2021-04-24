@@ -105,7 +105,7 @@ export default {
   methods: {
     disableVideo() {},
     joinEvent() {
-      document.getElementById("MainBox").classList.add("hide");
+      // document.getElementById("MainBox").classList.add("hide");
       // this.$parent.showNotVideo();
       if (!this.option.appid) {
         this.judge("Appid");
@@ -119,17 +119,17 @@ export default {
       this.rtc
         .joinChannel(this.option)
         .then(() => {
-          this.$message({
-            message: "Join Success",
-            type: "success",
-          });
+          // this.$message({
+          //   message: "Join Success",
+          //   type: "success",
+          // });
           this.rtc
             .publishStream()
             .then((stream) => {
-              this.$message({
-                message: "Publish Success",
-                type: "success",
-              });
+              // this.$message({
+              //   message: "Publish Success",
+              //   type: "success",
+              // });
               this.localStream = stream;
             })
             .catch((err) => {
@@ -138,11 +138,12 @@ export default {
             });
         })
         .catch((err) => {
-          this.$message.error("Join Failure");
+          // this.$message.error("Join Failure");
+          console.error("something went wrong :(, not pog", err)
           log("join channel error", err);
         });
-      this.disableJoin = true;
-      console.log("disableJoin = true");
+      // this.disableJoin = false;
+      // console.log("disableJoin = true");
     },
     leaveEvent() {
       this.$router.push("/");
@@ -150,17 +151,17 @@ export default {
       console.log("disableJoin = false");
       this.rtc
         .leaveChannel()
-        .then(() => {
-          this.$message({
-            message: "Leave Success",
-            type: "success",
-          });
+        // .then(() => {
+        //   this.$message({
+        //     message: "Leave Success",
+        //     type: "success",
+        //   });
 
-        })
-        .catch((err) => {
-          this.$message.error("Leave Failure");
-          log("leave error", err);
-        });
+        // })
+        // .catch((err) => {
+        //   this.$message.error("Leave Failure");
+        //   log("leave error", err);
+        // });
       this.localStream = null;
       this.remoteStreams = [];
     },
