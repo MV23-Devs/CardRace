@@ -1,0 +1,26 @@
+#top {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+
+}
+
+#navbar {
+    height: 50px;
+    background-color: lightslategray;
+    display: flex;
+    width: 100%;
+    color: white;
+}
+
+.navbarBtn {
+    border: 0px solid white;
+    color: inherit;
+    font-size: 20px;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.navbarBtn:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}
