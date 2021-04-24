@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import Join from "../components/Join.vue"
+import Collection from "../components/Collection.vue"
+import Create from "../components/Create.vue"
 
 Vue.use(VueRouter)
 
@@ -12,14 +14,18 @@ const routes = [
     component: Join
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/collection',
+    name: "Collection",
+    component: Collection,
+  },
+  {
+    path: '/create',
+    name: "Create",
+    component: Create,
   }
 ]
+
+
 
 const router = new VueRouter({
   mode: 'history',
