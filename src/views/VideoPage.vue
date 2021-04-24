@@ -1,7 +1,7 @@
 
 <template>
   <div id="VideoPage">
-    <VideoChat id="vidChat" msg="Flash Study" />
+    <VideoChat id="vidChat" />
 
     
 
