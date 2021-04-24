@@ -1,56 +1,24 @@
 <template>
   <div class="hello">
-    <div class="agora-title-box">
-      <div class="agora-title">FLASH Chat</div>
-    </div>
+
     <div class="agora-box" id="MainBox">
-      <!-- <div class="agora-input">
-        <div class="agora-text">* Appid</div>
-        <el-input
-          v-model="option.appid"
-          placeholder="Appid"
-          clearable
-        ></el-input>
-      </div> -->
+
       <div class="agora-input">
         <div class="agora-text">* Channel Name</div>
-        <el-input
+        <!-- <el-input
           v-model="option.channel"
           placeholder="Channel Name"
           clearable
-        ></el-input>
+        ></el-input> -->
       </div>
 
       <div class="agora-button">
-        <el-button
-          type="primary"
-          class="Buttons1"
-          id="JoinBtn"
-          @click="joinEvent"
-          :disabled="disableJoin"
-          >Join</el-button
-        >
+       
         <br />
-        <!-- <el-button
-          type="primary"
-          @click="leaveEvent"
-          plain
-          :disabled="!disableJoin"
-          class="Buttons1"
-          id="LeaveBtn"
-          >Leave
-        </el-button> -->
+
       </div>
     </div>
-    <el-button
-      type="primary"
-      @click="leaveEvent"
-      plain
-      :disabled="!disableJoin"
-      class="Buttons1"
-      id="LeaveBtn"
-      >Leave
-    </el-button>
+
     <div id="meetingControls">
       <!-- <button @click="disableVideo">Disable Video</button> -->
     </div>
@@ -87,11 +55,11 @@ export default {
   data() {
     return {
       option: {
-        appid: "1e7239def2b44918b997b976d7279519",
+        appid: "26c0545d6d7e45fea86e2ba4fbf2cfad",
         token:
-          "0061e7239def2b44918b997b976d7279519IADTKutYS2D5gtzhmU/RpdRHgELBxiLEl4qozW8xaU9kXZ5wcHYAAAAAEAAdwi3RvYU9YAEAAQC8hT1g",
+          "00626c0545d6d7e45fea86e2ba4fbf2cfadIACLawglJOUCaowxtx2n/nXYaf6f2XoUgmzwITzfYYHUOOovBZoAAAAAEABbpyVNiraFYAEAAQCKtoVg",
         uid: null,
-        channel: "",
+        channel: "please",
       },
 
       disableJoin: false,

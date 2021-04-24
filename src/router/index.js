@@ -25,7 +25,7 @@ const routes = [
     component: () => import('../views/Game.vue')
   },
   {
-    path: '/VideoPath',
+    path: '/VideoPage',
     name: "VideoPage",
     component: () => import('../views/VideoPage.vue')
   }

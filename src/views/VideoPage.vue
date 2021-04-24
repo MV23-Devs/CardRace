@@ -39,49 +39,7 @@
         v-on:click="cameraFlip"
         ><img src="../assets/camera-off.png" width="24" height="24"
       /></v-btn>
-      <h2>Current FlashCard</h2>
-      <!-- <Flashcard class="stackedElement" /> -->
-      <hr id="spacedHr" />
-      <h2>Guesses:</h2>
-      <ul
-        v-for="item in userInputs"
-        :key="(Math.random() + 1).toString() + userInput.indexOf(item)"
-        style="list-style-type: none"
-      >
-        <li>{{ item }}</li>
-      </ul>
-      <form @submit.prevent="checkAnswer" id="answerForm">
-        <label>Enter Answer Here:</label>
-        <input
-          type="text"
-          class="inputField"
-          v-on:input="userInput = $event.target.value"
-        />
-        <br />
-        <button id="submitBtn">Check Answer!</button>
-      </form>
-      <table id="scoreTable">
-        <thead>
-          <tr>
-            <th>Player name</th>
-            <th>Player points</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="item in players" :key="players.indexOf(item)">
-            <td>{{ item.email }}</td>
-            <td>{{ item.points }}</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <ul>
-        <li v-for="card in cards" :key="card.key">
-          {{ card.key }} | {{ card.val }}
-        </li>
-      </ul>
-
-      <button id="shuffleBtn" @click="shuffle">Shuffle</button>
+      
     </div>
   </div>
 </template>
