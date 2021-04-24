@@ -245,13 +245,18 @@ export default {
     background-color: #00000000;
     border: none;
 }
+div[role="alert"] {
+    display: none;
+}
 
 #notVideo {
-    height: 25px;
+    height: 50px;
     width: 100%;
     align-items: center;
-    background-color: #999;
+    /* background-color: #999; */
     position: absolute;
-    bottom: 0px;
+    border-top: 1px solid black;
+    padding-top: 15px;
+    bottom: 5px;
 }
 </style>

@@ -8,10 +8,10 @@
     <div id="notVideo">
       <!-- mute -->
       <button id="muteButton" class="iconButtons" v-if="micOn" v-on:click="mute"
-        ><img src="../assets/microphone.png" width="24" height="24"
+        ><img src="../assets/microphone.png" width="35" height="35"
       /></button>
       <button id="muteButton" class="iconButtons" v-else v-on:click="mute"
-        ><img src="../assets/microphone-off.png" width="24" height="24"
+        ><img src="../assets/microphone-off.png" width="35" height="35"
       /></button>
       <!-- video  -->
       <button
@@ -19,14 +19,14 @@
         class="iconButtons"
         v-if="camOn"
         v-on:click="cameraFlip"
-        ><img src="../assets/camera.png" width="24" height="24"
+        ><img src="../assets/camera.png" width="35" height="35"
       /></button>
       <button
         id="cameraButton"
         class="iconButtons"
         v-else
         v-on:click="cameraFlip"
-        ><img src="../assets/camera-off.png" width="24" height="24"
+        ><img src="../assets/camera-off.png" width="35" height="35"
       /></button>
       
     </div>
