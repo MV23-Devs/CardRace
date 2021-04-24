@@ -1,7 +1,6 @@
 #top {
-    position: absolute;
-    top: 0px;
-    left: 0px;
+    position: relative;
+    margin: none;
     width: 100%;
 
 }
@@ -15,6 +14,9 @@
 }
 
 .navbarBtn {
+    padding-left: 10px;
+
+    padding-right: 10px;
     border: 0px solid white;
     color: inherit;
     font-size: 20px;

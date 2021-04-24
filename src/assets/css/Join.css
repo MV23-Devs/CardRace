@@ -1,0 +1,35 @@
+button {
+    width: 250px;
+    height: 40px;
+    border: none;
+    border-radius: 25px;
+    background-color: rgb(112, 128, 144);
+    display: block;
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    color: white;
+
+}
+
+button:hover {
+    background-color: rgb(72, 88, 104);
+    outline: none;
+}
+
+#main {
+    margin-top:100px;
+    padding: 100px;
+    margin: auto;
+    width: 50%;
+    border: 1px solid #999;
+    border-radius: 50px;
+}
+
+#input-code {
+    padding-left: 10px;
+    width: 250px;
+    height: 40px;
+    border: 1px solid #999;
+    border-radius: 25px;
+}

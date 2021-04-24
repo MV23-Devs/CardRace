@@ -11,6 +11,14 @@
     </div>
   </div>
 </template>
+<script>
+export default {
+  name: 'Navbar',
+  props: {
+    showHome:Boolean
+  }
+}
+</script>
 
 
 <style src="../assets/css/Navbar.css">
