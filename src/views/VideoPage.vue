@@ -40,7 +40,7 @@
         ><img src="../assets/camera-off.png" width="24" height="24"
       /></v-btn>
       <h2>Current FlashCard</h2>
-      <Flashcard class="stackedElement" />
+      <!-- <Flashcard class="stackedElement" /> -->
       <hr id="spacedHr" />
       <h2>Guesses:</h2>
       <ul
@@ -89,14 +89,12 @@
 
 <script>
 import VideoChat from "../components/VideoChat.vue";
-import Flashcard from "../components/Flashcard.vue";
 
 
 export default {
   name: "App",
   components: {
     VideoChat,
-    Flashcard,
   },
 
   mounted() {
@@ -161,6 +159,3 @@ export default {
   },
 };
 </script>
-
-<style scoped src="../assets/styles/VideoPage.css">
-</style>
