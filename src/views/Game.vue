@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <Call> </Call>
+    <Call/>
   </div>
   <!-- <div id="notVideo">  -->
 
