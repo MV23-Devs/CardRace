@@ -1,6 +1,9 @@
 <template>
   <div class="home">
     <VideoPage> </VideoPage>
+
+
+
   </div>
   <!-- <div id="notVideo">  -->
 
@@ -25,7 +28,7 @@ export default {
     }
   }, 
   methods: {
-    // showNotVideo() {
+    // showNotVideo() { 
     //     document.getElementById("notVideo").classList.add("show");
     // }
 }
