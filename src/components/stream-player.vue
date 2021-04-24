@@ -42,4 +42,7 @@ export default {
   border: 1px solid white;
   height: 100px;
 }
+video {
+  position: relative !important;
+}
 </style>

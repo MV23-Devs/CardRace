@@ -208,13 +208,11 @@ export default {
   flex-wrap: wrap;
 }
 .agora-video {
-  margin: 20px;
+  margin: 10px;
 }
 .agora-video-player {
 }
-video {
-  position: relative !important;
-}
+
 .agora-input {
   margin: 20px;
   width: 320px;
