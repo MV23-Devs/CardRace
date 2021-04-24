@@ -14,6 +14,7 @@
 import VideoPage from '@/views/VideoPage.vue';
 // @ is an alias to /src
 // import Call from '@/components/Call.vue'
+// import Play from '@/components/Play.vue'
 
 export default {
   name: 'Home',
