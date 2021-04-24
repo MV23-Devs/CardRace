@@ -1,7 +1,9 @@
+
+
 <template>
   <div id="main">
-    <button id="joinMeeting">Join a meeting</button>
-    <div id="popup">
+    <!-- <button id="joinMeeting" @click="!isHidden">Join a meeting</button> -->
+    <div id="popup" >
       <input type="text" id="input-code" placeholder="Meeting ID" />
       <button v-on:click="goToVideoPage" id="joinBtn">Join</button>
     </div>
