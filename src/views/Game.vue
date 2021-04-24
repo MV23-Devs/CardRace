@@ -2,6 +2,9 @@
   <div class="home">
     <Call> </Call>
   </div>
+  <!-- <div id="notVideo">  -->
+
+  <!-- </div> -->
 </template>
 
 <script>
@@ -12,6 +15,21 @@ export default {
   name: 'Home',
   components: {
     Call
-  }
+  },
+
+  data() {
+    return {
+
+    }
+  }, 
+  methods: {
+    showNotVideo() {
+        document.getElementById("notVideo").classList.add("show");
+    }
 }
+
+  
+}
+
+
 </script>

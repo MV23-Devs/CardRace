@@ -105,8 +105,8 @@ export default {
   methods: {
     disableVideo() {},
     joinEvent() {
-      document.getElementById("MainBox").style.display = "none";
-      this.$parent.showVideo();
+      document.getElementById("MainBox").classList.add("hide");
+      // this.$parent.showNotVideo();
       if (!this.option.appid) {
         this.judge("Appid");
         return;
@@ -218,4 +218,12 @@ video {
   /* margin: 100px; */
   background-color: red;
 }
+</style>
+<style scoped src="../assets/css/Call.css">
+  .hide {
+    display: none;
+  }
+  .show {
+    display: inline-block;
+  }
 </style>
