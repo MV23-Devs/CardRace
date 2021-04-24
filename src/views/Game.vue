@@ -23,9 +23,9 @@ export default {
     }
   }, 
   methods: {
-    showNotVideo() {
-        document.getElementById("notVideo").classList.add("show");
-    }
+    // showNotVideo() {
+    //     document.getElementById("notVideo").classList.add("show");
+    // }
 }
 
   
