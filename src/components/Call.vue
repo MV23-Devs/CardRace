@@ -14,22 +14,21 @@
       </div> -->
       <div class="agora-input">
         <div class="agora-text">* Channel Name</div>
-        <el-input
+        <input
           v-model="option.channel"
           placeholder="Channel Name"
           clearable
-        ></el-input>
+         />
       </div>
 
       <div class="agora-button">
-        <el-button
+        <button
           type="primary"
           class="Buttons1"
           id="JoinBtn"
           @click="joinEvent"
           :disabled="disableJoin"
-          >Join</el-button
-        >
+          >Join</button>
         <br />
         <!-- <el-button
           type="primary"
@@ -42,7 +41,7 @@
         </el-button> -->
       </div>
     </div>
-    <el-button
+    <button
       type="primary"
       @click="leaveEvent"
       plain
@@ -50,7 +49,7 @@
       class="Buttons1"
       id="LeaveBtn"
       >Leave
-    </el-button>
+    </button>
     <div id="meetingControls">
       <!-- <button @click="disableVideo">Disable Video</button> -->
     </div>
@@ -91,9 +90,9 @@ export default {
       option: {
         appid: "26c0545d6d7e45fea86e2ba4fbf2cfad",
         token:
-          "00626c0545d6d7e45fea86e2ba4fbf2cfadIABec8A4YxYDiFo2nVqZsELkvMiHuL1LBVnAfPHoYY8TMSViXT0AAAAAEABbpyVN86iFYAEAAQDzqIVg",
+          "00626c0545d6d7e45fea86e2ba4fbf2cfadIACLawglJOUCaowxtx2n/nXYaf6f2XoUgmzwITzfYYHUOOovBZoAAAAAEABbpyVNiraFYAEAAQCKtoVg",
         uid: null,
-        channel: "",
+        channel: "please",
       },
       disableJoin: false,
       localStream: null,
@@ -107,7 +106,7 @@ export default {
     disableVideo() {},
     joinEvent() {
       document.getElementById("MainBox").style.display = "none";
-      this.$parent.showNotVideo();
+      this.$parent.showVideo();
       if (!this.option.appid) {
         this.judge("Appid");
         return;
@@ -210,90 +209,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-.hello {
-  text-align: center;
-  /* margin: auto; */
-  width: 100%;
-}
-.agora-title {
-  margin: top 50px;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  font-size: 32px;
-  font-weight: bold;
-  text-align: center;
-  color: #000;
-  margin: auto;
-}
-.agora-box {
-  display: inline-block;
-}
-.agora-view {
-  margin-left: 20px;
-  margin-top: 20px;
-  padding: none;
-  /* max-width: 70%; */
-  display: flexbox;
-  flex-wrap: wrap;
-  width: 100%;
-}
-.agora-video {
-  display: inline-block;
-  width: 640px;
-  height: 480px;
-  margin: 20px;
-}
-.agora-video > div {
-  width: 640px;
-  height: 480px;
-  padding: 0px;
-  margin: auto;
-  background-color: red;
-  position: relative !important;
-  overflow: visible;
-}
-.agora-input {
-  margin: 20px;
-  width: 320px;
-}
-.agora-text {
-  margin: 5px;
-  font-size: 16px;
-  font-weight: bold;
-}
-.agora-button {
-  display: inline-block;
-  width: 180px;
-  justify-content: space-between;
-  margin: 20px;
-}
-.Buttons1 {
-  margin: 5px;
-  position: relative;
-  border-radius: 20px;
-  border: 0px solid #000;
-  color: #fff;
-  padding: 10px;
-  padding-left: 30px;
-  padding-right: 30px;
-  transition: padding 1s;
-}
-.Buttons1:hover {
-  animation-fill-mode: forwards;
-  padding-left: 70px;
-  padding-right: 70px;
-  transition: padding 1s;
-}
-#JoinBtn {
-  background-color: deepskyblue;
-}
-#LeaveBtn {
-  background-color: deepskyblue !important;
-  display: block;
-  color: white !important;
-  margin: auto;
-}
-</style>
+
 
 <style>
 video {
