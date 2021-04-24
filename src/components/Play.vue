@@ -6,11 +6,13 @@
     </div>
     <div id="right">
         <div id="timer">
-
+          a
         </div>
         <div id="log">
-
+          a
         </div>
     </div>
   </div>
 </template>
+<style src="../assets/css/Play.css">
+</style>
