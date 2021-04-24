@@ -2,7 +2,11 @@
   <div id="playArea">
     <div id="left">
       <div id="FlashcardHint"></div>
-      <input type="text" id="answerInput"/>
+      <form id="" v-on:submit="answerSubmitHandler">
+        <label> Check Answers </label>
+        <input type="text" id="answerInput" v-model="answerInput"/>
+        <input type="submit" id="submit"/>
+      </form>
     </div>
     <div id="right">
         <div id="timer">
@@ -21,18 +25,35 @@
     props: {
       answers: Array,
     },
+    data() {
+      return {
+        answerInput: "",
+      }
+    },
     methods: {
-      checkAnswer(userInput, key){
-        for(let i=0; i<this.answers.length; i++){
-          if(this.answers[i].key == key){
-            if(userInput == this.answers[i].val){
+      answerSubmitHandler(){
+        //make firebase call to get answers
+        let answers = [{key: "jacob", val: "monke"}];
+        let flashcardKey = "jacob";
+        //console.log("lesgo");
+        this.checkAnswer(this.answerInput, flashcardKey, answers)
+      },
+      checkAnswer(userInput, key, answers){
+        for(let i=0; i<answers.length; i++){
+          if(answers[i].key == key){
+            if(userInput == answers[i].val){
               //add points to user score and render a "correct" to screen
+              //console.log("true")
               return true; //change card
+            }else{
+              //console.log("false")
+              return false;
             }
           }
         }
-        return false;
       }
     }
   }
 </script>
+<style src="../assets/css/Play.css">
+</style>

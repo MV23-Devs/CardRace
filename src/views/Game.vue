@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <Call/>
+    <Play/>
   </div>
   <!-- <div id="notVideo">  -->
 
@@ -10,11 +11,13 @@
 <script>
 // @ is an alias to /src
 import Call from '@/components/Call.vue'
+import Play from '@/components/Play.vue'
 
 export default {
   name: 'Home',
   components: {
-    Call
+    Call,
+    Play
   },
 
   data() {
