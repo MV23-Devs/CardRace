@@ -106,7 +106,7 @@ export default {
     disableVideo() {},
     joinEvent() {
       document.getElementById("MainBox").classList.add("hide");
-      // this.$parent.showNotVideo();
+      this.$parent.showNotVideo();
       if (!this.option.appid) {
         this.judge("Appid");
         return;
