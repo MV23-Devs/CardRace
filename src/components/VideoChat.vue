@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <div class="agora-title-box">
-      <div class="agora-title">Agora Basic Video Call</div>
+      <div class="agora-title">Card-Race</div>
     </div>
     <div class="agora-box">
       <div class="agora-input">
@@ -120,6 +120,8 @@ export default {
               this.$message.error("Publish Failure");
               log("publish local error", err);
             });
+            document.getElementsByClassName("agora-box")[0].classList.add("hidden")
+            console.error("yeet")
         })
         .catch((err) => {
           this.$message.error("Join Failure");
@@ -193,8 +195,14 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style >
+.hidden {
+    display:none;
+    height: 0px;
+    overflow: hidden;
+}
 .agora-box {
+    display: inline-block;
 }
 .agora-title {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -231,5 +239,24 @@ export default {
 .agora-video {
   width: 320px;
   height: 240px;
+}
+
+.iconButtons {
+    background-color: #00000000;
+    border: none;
+}
+div[role="alert"] {
+    display: none;
+}
+
+#notVideo {
+    height: 50px;
+    width: 100%;
+    align-items: center;
+    /* background-color: #999; */
+    position: absolute;
+    border-top: 1px solid black;
+    padding-top: 15px;
+    bottom: 5px;
 }
 </style>

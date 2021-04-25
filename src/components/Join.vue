@@ -4,7 +4,8 @@
   <div id="main">
     <!-- <button id="joinMeeting" @click="!isHidden">Join a meeting</button> -->
     <div id="popup" >
-      <input type="text" id="input-code" placeholder="Meeting ID" />
+      <!-- <input type="text" id="input-code" placeholder="Meeting ID" /> -->
+      <p>Message Here</p>
       <button v-on:click="goToVideoPage" id="joinBtn">Join</button>
     </div>
   </div>

@@ -1,7 +1,9 @@
 <template>
   <div class="home">
-    <Call/>
-    <Play/>
+    <VideoPage> </VideoPage>
+
+
+
   </div>
   <!-- <div id="notVideo">  -->
 
@@ -9,15 +11,16 @@
 </template>
 
 <script>
+import VideoPage from '@/views/VideoPage.vue';
 // @ is an alias to /src
-import Call from '@/components/Call.vue'
-import Play from '@/components/Play.vue'
+// import Call from '@/components/Call.vue'
+// import Play from '@/components/Play.vue'
 
 export default {
   name: 'Home',
   components: {
-    Call,
-    Play
+    // Call
+    VideoPage
   },
 
   data() {
@@ -26,7 +29,7 @@ export default {
     }
   }, 
   methods: {
-    // showNotVideo() {
+    // showNotVideo() { 
     //     document.getElementById("notVideo").classList.add("show");
     // }
 }
