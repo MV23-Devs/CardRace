@@ -65,11 +65,15 @@
       </div>
     </div>
     <div id="backup-leave">
-        <el-button
-          type="primary"
-          @click="leaveEvent"
-          plain
-          :disabled="!disableJoin"> leave </el-button></div>
+      <el-button
+        type="primary"
+        @click="leaveEvent"
+        plain
+        :disabled="!disableJoin"
+      >
+        leave
+      </el-button>
+    </div>
   </div>
 </template>
 
@@ -126,33 +130,34 @@ export default {
             .get()
             .then((snap) => {
               size = snap.size; // will return the collection size
+            })
+            .then(() => {
+              if (size == 0) {
+                firebase
+                  .firestore()
+                  .collection("meetings")
+                  .doc(this.option.channel)
+                  .collection("users")
+                  .doc(this.user)
+                  .set({
+                    name: this.user,
+                    points: 0,
+                    host: true,
+                  });
+              } else {
+                firebase
+                  .firestore()
+                  .collection("meetings")
+                  .doc(this.option.channel)
+                  .collection("users")
+                  .doc(this.user)
+                  .set({
+                    name: this.user,
+                    points: 0,
+                    host: false,
+                  });
+              }
             });
-
-          if (size == 0) {
-            firebase
-              .firestore()
-              .collection("meetings")
-              .doc(this.option.channel)
-              .collection("users")
-              .doc(this.user)
-              .set({
-                name: this.user,
-                points: 0,
-                host: true,
-              });
-          } else {
-            firebase
-              .firestore()
-              .collection("meetings")
-              .doc(this.option.channel)
-              .collection("users")
-              .doc(this.user)
-              .set({
-                name: this.user,
-                points: 0,
-                host: false,
-              });
-          }
 
           this.$emit("changeUsername", this.user);
 
@@ -176,7 +181,7 @@ export default {
           document
             .getElementsByClassName("agora-box")[0]
             .classList.add("hidden");
-            document.getElementById("backup-leave").classList.add("show")
+          document.getElementById("backup-leave").classList.add("show");
           console.error("yeet");
         })
         .catch((err) => {

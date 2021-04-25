@@ -170,6 +170,9 @@ export default {
     },
     changeUsername(username) {
       this.user = username;
+
+    
+
       console.log(this.user);
     },
 
