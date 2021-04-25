@@ -15,6 +15,14 @@
       <div id="right">
         <div id="timer">
           <button v-on:click="sortScoreboard">Sort Scoreboard</button>
+          <ul>
+            <li
+              v-for="item in sortScoreboard(scores)"
+              v-bind:key="(item.name, item.points)"
+            >
+              <p>{{ item.name }}: {{ item.points }}</p>
+            </li>
+          </ul>
         </div>
         <div id="log">a</div>
       </div>
@@ -122,13 +130,26 @@ export default {
       answerInput: "",
       collection: "",
       key: "",
-      scores: [
-        { name: "lesgo", score: 100 },
-        { name: "pull up", score: -10000 },
-        { name: "convertible", score: 12000 },
-      ],
+      scores: [],
     };
   },
+  created() {
+    firebase
+      .firestore()
+      .collection("meetings")
+      .doc("please")
+      .collection("users")
+      .get()
+      .then((querySnapshot) => {
+        let storeScores = [];
+        querySnapshot.forEach((doc) => {
+          storeScores.push(doc.data());
+        });
+        console.log(storeScores);
+        this.scores = storeScores;
+      });
+  },
+
   methods: {
     load() {
       firebase
@@ -158,7 +179,7 @@ export default {
     },
 
     submitCards() {
-      document.getElementById("host-controls").classList.add("hidden")
+      document.getElementById("host-controls").classList.add("hidden");
       console.log("Hello");
 
       // firebase.firestore().collection("collections").doc(this.selection).get().then(doc => {
@@ -184,13 +205,12 @@ export default {
                 val: doc.data().val,
               });
           });
-        }).then(() => {
+        })
+        .then(() => {
           firebase.firestore().collection("meetings").doc("please").set({
             active: true,
-          })
-        })
-
-
+          });
+        });
     },
 
     mute() {
@@ -213,19 +233,25 @@ export default {
     answerSubmitHandler() {
       let answers = [];
       let flashcardKey = "jacob";
-      let collectionName = "Countries"
+      let collectionName = "Countries";
 
-      firebase.firestore().collection("collections").doc(collectionName).collection("cards").get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          answers.push(doc.data());
-        })
-      })
+      firebase
+        .firestore()
+        .collection("collections")
+        .doc(collectionName)
+        .collection("cards")
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            answers.push(doc.data());
+          });
+        });
       console.log("answers", answers);
       this.guesses.push(this.answerInput);
-      
+
       //console.log("lesgo");
       let correct = this.checkAnswer(this.answerInput, flashcardKey, answers);
-      if(correct){
+      if (correct) {
         this.guesses.push("GUESS CORRECT!");
       }
     },
@@ -266,15 +292,15 @@ export default {
         });
     },
     sortScoreboard(scores) {
-      scores = [
-        { name: "Jason", score: 500 },
-        { name: "Saarang", score: 1000 },
-        { name: "Jacob", score: 100 },
-        { name: "Atli", score: 0 },
-      ];
+      // scores = [
+      //   { name: "Jason", score: 500 },
+      //   { name: "Saarang", score: 1000 },
+      //   { name: "Jacob", score: 100 },
+      //   { name: "Atli", score: 0 },
+      // ];
       for (let i = 0; i < scores.length; i++) {
         for (let j = 0; j < scores.length - 1; j++) {
-          if (scores[j].score < scores[j + 1].score) {
+          if (scores[j].points < scores[j + 1].points) {
             let tmp = scores[j];
             scores[j] = scores[j + 1];
             scores[j + 1] = tmp;
