@@ -18,17 +18,18 @@
 }
 
 #nav {
-  padding: 15px;
+  padding: 0px;
   background-color: #444;
   color: white;
 }
 
 #nav a {
+  padding: 10px;
   font-weight: bold;
   color: #fff;
   text-emphasis: none;
   text-decoration: none;
-  height: 30px;
+  height: 60px;
 }
 
 #nav a:hover {

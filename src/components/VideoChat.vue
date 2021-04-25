@@ -208,6 +208,7 @@ export default {
         });
       this.localStream = null;
       this.remoteStreams = [];
+      document.location.href = "/"
     },
     judge(detail) {
       this.$notify({
