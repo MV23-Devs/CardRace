@@ -1,38 +1,57 @@
 
 <template>
-  <div id="VideoPage">
-    <VideoChat id="vidChat" @changeUsername="changeUsername($event)" />
+  <div>
+    <div id="VideoPage">
+      <VideoChat id="vidChat" @changeUsername="changeUsername($event)" />
 
-    <div id="notVideo">
-      <!-- mute -->
-      <button
-        id="muteButton"
-        class="iconButtons"
-        v-if="micOn"
-        v-on:click="mute"
-      >
-        <img src="../assets/microphone.png" width="35" height="35" />
-      </button>
-      <button id="muteButton" class="iconButtons" v-else v-on:click="mute">
-        <img src="../assets/microphone-off.png" width="35" height="35" />
-      </button>
-      <!-- video  -->
-      <button
-        id="cameraButton"
-        class="iconButtons"
-        v-if="camOn"
-        v-on:click="cameraFlip"
-      >
-        <img src="../assets/camera.png" width="35" height="35" />
-      </button>
-      <button
-        id="cameraButton"
-        class="iconButtons"
-        v-else
-        v-on:click="cameraFlip"
-      >
-        <img src="../assets/camera-off.png" width="35" height="35" />
-      </button>
+      <div id="playArea">
+        <div id="left">
+          <div id="FlashcardHint"></div>
+          <form id="" v-on:submit.prevent="answerSubmitHandler">
+            <label> Check Answers </label>
+            <input type="text" id="answerInput" v-model="answerInput" />
+            <input type="submit" id="submit" />
+          </form>
+        </div>
+        <div id="right">
+          <div id="timer">
+            <button v-on:click="sortScoreboard">Sort Scoreboard</button>
+          </div>
+          <div id="log">a</div>
+        </div>
+      </div>
+
+      <div id="notVideo">
+        <!-- mute -->
+        <button
+          id="muteButton"
+          class="iconButtons"
+          v-if="micOn"
+          v-on:click="mute"
+        >
+          <img src="../assets/microphone.png" width="35" height="35" />
+        </button>
+        <button id="muteButton" class="iconButtons" v-else v-on:click="mute">
+          <img src="../assets/microphone-off.png" width="35" height="35" />
+        </button>
+        <!-- video  -->
+        <button
+          id="cameraButton"
+          class="iconButtons"
+          v-if="camOn"
+          v-on:click="cameraFlip"
+        >
+          <img src="../assets/camera.png" width="35" height="35" />
+        </button>
+        <button
+          id="cameraButton"
+          class="iconButtons"
+          v-else
+          v-on:click="cameraFlip"
+        >
+          <img src="../assets/camera-off.png" width="35" height="35" />
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -40,7 +59,7 @@
 
 <script>
 import VideoChat from "../components/VideoChat.vue";
-import firebase from "firebase"
+import firebase from "firebase";
 
 export default {
   name: "App",
@@ -69,7 +88,6 @@ export default {
   },
 
   data() {
-
     return {
       collections: [],
       cards: [],
@@ -133,7 +151,29 @@ export default {
         .doc(key)
         .get()
         .then((doc) => {
-          console.log(doc.data().val == this.answerInput);
+          if (doc.data().val == this.answerInput) {
+            let score = 0;
+
+            firebase
+              .firestore()
+              .collection("meetings")
+              .doc("please")
+              .collection("users")
+              .doc(this.user)
+              .get()
+              .then((doc) => {
+                score = doc.data().points;
+                firebase
+                  .firestore()
+                  .collection("meetings")
+                  .doc("please")
+                  .collection("users")
+                  .doc(this.user)
+                  .set({
+                    points: score + 5,
+                  });
+              });
+          }
         });
     },
   },
