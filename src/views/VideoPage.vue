@@ -143,20 +143,19 @@ export default {
     };
   },
   created() {
-
     firebase
       .firestore()
       .collection("meetings")
       .doc("please")
       .collection("users")
-      .onSnapshot(querySnapshot => {
-        let storeScores = []
-        querySnapshot.forEach(doc => {
+      .onSnapshot((querySnapshot) => {
+        let storeScores = [];
+        querySnapshot.forEach((doc) => {
           //update stuff
           storeScores.push(doc.data());
-        })
+        });
         this.scores = storeScores;
-      })
+      });
   },
   methods: {
     load() {
@@ -180,34 +179,46 @@ export default {
             }
           });
         });
-        let host = false;
-      firebase.firestore().collection("meetings").doc("please").collection("users").doc(this.user).get().then(doc => {
-        host =  doc.data().host
-      })
-      console.log("host"  +host)
-      if(host) {
-        document.getElementById("host-controls").classList.add("show")
-      }
     },
     changeUsername(username) {
       this.user = username;
 
-    
-
       console.log(this.user);
-    },
-
-   
-
-    submitCards() {
 
       let host = false;
+      firebase
+        .firestore()
+        .collection("meetings")
+        .doc("please")
+        .collection("users")
+        .doc(this.user)
+        .get()
+        .then((doc) => {
+          host = doc.data().host;
+          console.log("host", host);
+        })
+        .then(() => {
+          if (host) {
+            document.getElementById("host-controls").classList.add("show");
+          }
+        });
+    },
 
-      firebase.firestore().collection("meetings").doc("please").collection("users").doc(this.user).get().then(doc => {
-        host = doc.data().host
-      })
+    submitCards() {
+      let host = false;
 
-      console.log(host)
+      firebase
+        .firestore()
+        .collection("meetings")
+        .doc("please")
+        .collection("users")
+        .doc(this.user)
+        .get()
+        .then((doc) => {
+          host = doc.data().host;
+        });
+
+      console.log(host);
 
       document.getElementById("host-controls").classList.add("hidden");
       console.log("Hello");
@@ -253,7 +264,8 @@ export default {
                 val: doc.data().val,
               });
           });
-        }).then(() => {
+        })
+        .then(() => {
           firebase.firestore().collection("meetings").doc("please").set({
             active: true,
           });
@@ -328,19 +340,25 @@ export default {
       // }
       this.checkAnswer(this.answerInput);
       let answers = [];
-      let collectionName = "Countries"
+      let collectionName = "Countries";
 
-      firebase.firestore().collection("collections").doc(collectionName).collection("cards").get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          answers.push(doc.data());
-        })
-      })
+      firebase
+        .firestore()
+        .collection("collections")
+        .doc(collectionName)
+        .collection("cards")
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            answers.push(doc.data());
+          });
+        });
       console.log("answers", answers);
       this.guesses.push(this.answerInput);
-      
+
       //console.log("lesgo");
       let correct = this.checkAnswer(this.answerInput);
-      if(correct){
+      if (correct) {
         this.guesses.push("GUESS CORRECT!");
       }
     },
