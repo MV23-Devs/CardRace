@@ -33,8 +33,8 @@
         </div>
         <div id="log">
           <ul>
-            <li v-for="message in messages" :key="message">
-              {{ message.message }}
+            <li v-for="(item, i) in messages" :key="i">
+              {{ item.message }}
             </li>
           </ul>
         </div>
