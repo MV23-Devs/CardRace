@@ -18,21 +18,22 @@
 }
 
 #nav {
-  padding: 5px;
-  background-color: #bbb;
+  padding: 15px;
+  background-color: #444;
+  color: white;
 }
 
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: #fff;
+  text-emphasis: none;
+  text-decoration: none;
   height: 30px;
 }
 
 #nav a:hover {
   font-weight: bold;
-  color: #2c3e50;
-  height: 100%;
-  background-color: #11111100;
+  background-color: #000;
 }
 
 #nav a.router-link-exact-active {
