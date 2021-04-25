@@ -107,6 +107,12 @@ export default {
     //       console.log(this.answer);
     //     });
     // }
+    firebase.firestore().collections("meetings").doc("please").collection("users").onSnapshot(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        //update stuff
+        console.log(doc);
+      })
+    })
   },
 
   data() {
@@ -132,26 +138,13 @@ export default {
       answerInput: "",
       collection: "",
       key: "",
-      scores: [],
+      scores: [
+        { name: "lesgo", score: 100 },
+        { name: "pull up", score: -10000 },
+        { name: "convertible", score: 12000 },
+      ],
     };
   },
-  created() {
-    firebase
-      .firestore()
-      .collection("meetings")
-      .doc("please")
-      .collection("users")
-      .get()
-      .then((querySnapshot) => {
-        let storeScores = [];
-        querySnapshot.forEach((doc) => {
-          storeScores.push(doc.data());
-        });
-        console.log(storeScores);
-        this.scores = storeScores;
-      });
-  },
-
   methods: {
     load() {
       firebase
@@ -234,8 +227,7 @@ export default {
                 val: doc.data().val,
               });
           });
-        })
-        .then(() => {
+        }).then(() => {
           firebase.firestore().collection("meetings").doc("please").set({
             active: true,
           });
@@ -309,6 +301,23 @@ export default {
       //   this.guesses.push("GUESS CORRECT!");
       // }
       this.checkAnswer(this.answerInput);
+      let answers = [];
+      let flashcardKey = "jacob";
+      let collectionName = "Countries"
+
+      firebase.firestore().collection("collections").doc(collectionName).collection("cards").get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          answers.push(doc.data());
+        })
+      })
+      console.log("answers", answers);
+      this.guesses.push(this.answerInput);
+      
+      //console.log("lesgo");
+      let correct = this.checkAnswer(this.answerInput, flashcardKey, answers);
+      if(correct){
+        this.guesses.push("GUESS CORRECT!");
+      }
     },
     checkAnswer(userInput) {
       // let response = false;
@@ -339,15 +348,15 @@ export default {
         });
     },
     sortScoreboard(scores) {
-      // scores = [
-      //   { name: "Jason", score: 500 },
-      //   { name: "Saarang", score: 1000 },
-      //   { name: "Jacob", score: 100 },
-      //   { name: "Atli", score: 0 },
-      // ];
+      scores = [
+        { name: "Jason", score: 500 },
+        { name: "Saarang", score: 1000 },
+        { name: "Jacob", score: 100 },
+        { name: "Atli", score: 0 },
+      ];
       for (let i = 0; i < scores.length; i++) {
         for (let j = 0; j < scores.length - 1; j++) {
-          if (scores[j].points < scores[j + 1].points) {
+          if (scores[j].score < scores[j + 1].score) {
             let tmp = scores[j];
             scores[j] = scores[j + 1];
             scores[j + 1] = tmp;
