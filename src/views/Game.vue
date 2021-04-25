@@ -1,9 +1,7 @@
 <template>
   <div class="home">
-    <VideoPage> </VideoPage>
-
-
-
+    <VideoPage id="callStuff" />
+    <Play id="cards" />
   </div>
   <!-- <div id="notVideo">  -->
 
@@ -11,31 +9,41 @@
 </template>
 
 <script>
-import VideoPage from '@/views/VideoPage.vue';
+import VideoPage from "@/views/VideoPage.vue";
 // @ is an alias to /src
 // import Call from '@/components/Call.vue'
-// import Play from '@/components/Play.vue'
+import Play from "@/components/Play.vue";
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
     // Call
-    VideoPage
+    VideoPage,
+    Play,
   },
 
   data() {
-    return {
-
-    }
-  }, 
+    return {};
+  },
   methods: {
-    // showNotVideo() { 
+    // showNotVideo() {
     //     document.getElementById("notVideo").classList.add("show");
     // }
-}
-
-  
-}
-
-
+  },
+};
 </script>
+
+<style scoped>
+.home {
+  display: flex;
+}
+#callStuff {
+  width: 30% !important;
+  display: inline-block;
+}
+#cards {
+  width: 70% !important;
+  display: inline-block;
+
+}
+</style>
