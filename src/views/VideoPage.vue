@@ -10,13 +10,20 @@
         </div>
         <form id="" v-on:submit.prevent="answerSubmitHandler">
           <!-- <label> Check Answers </label> -->
-          <input type="text" id="answerInput" placeholder="Answer Here" v-model="answerInput" />
-          <input type="submit" id="submit" class="submit"/>
+          <input
+            type="text"
+            id="answerInput"
+            placeholder="Answer Here"
+            v-model="answerInput"
+          />
+          <input type="submit" id="submit" class="submit" />
         </form>
       </div>
       <div id="right">
         <div id="timer">
-          <button class="submit" v-on:click="sortScoreboard">Sort Scoreboard</button>
+          <button class="submit" v-on:click="sortScoreboard">
+            Sort Scoreboard
+          </button>
           <ul>
             <li
               v-for="item in sortScoreboard(scores)"
@@ -32,7 +39,7 @@
 
     <div id="host-controls">
       <h3>Choose Collection to Play With</h3>
-      <select v-model="selection" id="dropdown" >
+      <select v-model="selection" id="dropdown">
         <option
           id="dropdown-option"
           v-for="item in collections"
@@ -173,11 +180,21 @@ export default {
             }
           });
         });
+        let host = false;
+      firebase.firestore().collection("meetings").doc("please").collection("users").doc(this.user).get().then(doc => {
+        host =  doc.data().host
+      })
+      console.log("host"  +host)
+      if(host) {
+        document.getElementById("host-controls").classList.add("show")
+      }
     },
     changeUsername(username) {
       this.user = username;
       console.log(this.user);
     },
+
+   
 
     submitCards() {
 

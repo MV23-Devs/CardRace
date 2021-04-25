@@ -1,9 +1,14 @@
 #playArea {
     /* background-color: gray; */
-    display: inline-flex;
+    
+    display: none;
     flex-direction: column;
     width: 70% !important;
 
+}
+
+.playVisible {
+    display: inline-flex !important;
 }
 
 #backup-leave {
@@ -125,6 +130,7 @@
 }
 
 #host-controls {
+    display: none;
     z-index: 100;
     position: absolute;
     bottom: 80px;
