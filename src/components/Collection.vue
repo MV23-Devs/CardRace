@@ -10,11 +10,14 @@
     <h1>Public Collection:</h1>
 
     <ul>
-      <li v-for="item in collections" :key="item.title">
+      <li class="big-li" v-for="item in collections" :key="item.title">
         {{ item.title }}
         <ul>
-          <li v-for="card in item.cards" :key="card.key">
+          <hr />
+
+          <li class="small-li" v-for="card in item.cards" :key="card.key">
             {{ card.key }} | {{ card.val }}
+            <br>
           </li>
         </ul>
       </li>
@@ -106,5 +109,4 @@ export default {
 </style>
 
 <style  src="../assets/css/Collection.css">
-
 </style>
