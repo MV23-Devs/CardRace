@@ -34,7 +34,7 @@
         <div id="log">
           <ul>
             <li v-for="message in messages" :key="message">
-              {{ message }}
+              {{ message.message }}
             </li>
           </ul>
         </div>
@@ -167,12 +167,31 @@ export default {
       .collection("meetings")
       .doc("please")
       .collection("logs")
-      .onSnapshot((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          //update stuff
-          this.messages.push(doc.data().message);
+      .onSnapshot((ref) => {
+          ref.docChanges().forEach((change) => {
+            const { newIndex, oldIndex, doc, type } = change;
+            let temp = {
+              message: doc.data().message,
+            };
+            if (type === "added") {
+              console.log(temp);
+              this.messages.push(temp);
+            } else if (type === "modified") {
+              this.messages.splice(oldIndex, 1);
+              this.messages.splice(newIndex, 0, temp);
+            } else if (type === "removed") {
+              this.messages.splice(oldIndex, 1);
+            }
+          });
         });
-      });
+
+
+      // .onSnapshot((querySnapshot) => {
+      //   querySnapshot.forEach((doc) => {
+      //     //update stuff
+      //     this.messages.push(doc.data().message);
+      //   });
+      // });
   },
   methods: {
     load() {
@@ -473,6 +492,7 @@ export default {
                   .collection("users")
                   .doc(this.user)
                   .set({
+                    name: this.user,
                     points: score + 5,
                   });
               });
