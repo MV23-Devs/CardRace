@@ -9,14 +9,22 @@
           {{ val }}
         </div>
         <form id="" v-on:submit.prevent="answerSubmitHandler">
-          <label> Check Answers </label>
-          <input type="text" id="answerInput" v-model="answerInput" />
-          <input type="submit" id="submit" />
+          <!-- <label> Check Answers </label> -->
+          <input type="text" id="answerInput" placeholder="Answer Here" v-model="answerInput" />
+          <input type="submit" id="submit" class="submit"/>
         </form>
       </div>
       <div id="right">
         <div id="timer">
-          <button v-on:click="sortScoreboard">Sort Scoreboard</button>
+          <button class="submit" v-on:click="sortScoreboard">Sort Scoreboard</button>
+          <ul>
+            <li
+              v-for="item in sortScoreboard(scores)"
+              v-bind:key="(item.name, item.points)"
+            >
+              <p>{{ item.name }}: {{ item.points }}</p>
+            </li>
+          </ul>
         </div>
         <div id="log">a</div>
       </div>
@@ -24,7 +32,7 @@
 
     <div id="host-controls">
       <h3>Choose Collection to Play With</h3>
-      <select v-model="selection" id="dropdown">
+      <select v-model="selection" id="dropdown" >
         <option
           id="dropdown-option"
           v-for="item in collections"
@@ -33,7 +41,7 @@
           {{ item.title }}
         </option>
       </select>
-      <button v-on:click="submitCards">Submit</button>
+      <button v-on:click="submitCards" class="submit">Submit</button>
     </div>
 
     <div id="notVideo">
@@ -124,13 +132,26 @@ export default {
       answerInput: "",
       collection: "",
       key: "",
-      scores: [
-        { name: "lesgo", score: 100 },
-        { name: "pull up", score: -10000 },
-        { name: "convertible", score: 12000 },
-      ],
+      scores: [],
     };
   },
+  created() {
+    firebase
+      .firestore()
+      .collection("meetings")
+      .doc("please")
+      .collection("users")
+      .get()
+      .then((querySnapshot) => {
+        let storeScores = [];
+        querySnapshot.forEach((doc) => {
+          storeScores.push(doc.data());
+        });
+        console.log(storeScores);
+        this.scores = storeScores;
+      });
+  },
+
   methods: {
     load() {
       firebase
@@ -160,6 +181,16 @@ export default {
     },
 
     submitCards() {
+
+      let host = false;
+
+      firebase.firestore().collection("meetings").doc("please").collection("users").doc(this.user).get().then(doc => {
+        host = doc.data().host
+      })
+
+      console.log(host)
+
+      document.getElementById("host-controls").classList.add("hidden");
       console.log("Hello");
 
       // firebase.firestore().collection("collections").doc(this.selection).get().then(doc => {
@@ -308,15 +339,15 @@ export default {
         });
     },
     sortScoreboard(scores) {
-      scores = [
-        { name: "Jason", score: 500 },
-        { name: "Saarang", score: 1000 },
-        { name: "Jacob", score: 100 },
-        { name: "Atli", score: 0 },
-      ];
+      // scores = [
+      //   { name: "Jason", score: 500 },
+      //   { name: "Saarang", score: 1000 },
+      //   { name: "Jacob", score: 100 },
+      //   { name: "Atli", score: 0 },
+      // ];
       for (let i = 0; i < scores.length; i++) {
         for (let j = 0; j < scores.length - 1; j++) {
-          if (scores[j].score < scores[j + 1].score) {
+          if (scores[j].points < scores[j + 1].points) {
             let tmp = scores[j];
             scores[j] = scores[j + 1];
             scores[j + 1] = tmp;

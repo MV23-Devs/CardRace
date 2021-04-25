@@ -64,6 +64,12 @@
         ></StreamPlayer>
       </div>
     </div>
+    <div id="backup-leave">
+        <el-button
+          type="primary"
+          @click="leaveEvent"
+          plain
+          :disabled="!disableJoin"> leave </el-button></div>
   </div>
 </template>
 
@@ -170,6 +176,7 @@ export default {
           document
             .getElementsByClassName("agora-box")[0]
             .classList.add("hidden");
+            document.getElementById("backup-leave").classList.add("show")
           console.error("yeet");
         })
         .catch((err) => {
