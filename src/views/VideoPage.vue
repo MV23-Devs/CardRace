@@ -14,7 +14,7 @@
       </div>
       <div id="right">
         <div id="timer">
-          <button class="submit2" v-on:click="sortScoreboard">Sort Scoreboard</button>
+          <button class="submit" v-on:click="sortScoreboard">Sort Scoreboard</button>
           <ul>
             <li
               v-for="item in sortScoreboard(scores)"
