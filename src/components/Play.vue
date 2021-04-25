@@ -2,7 +2,7 @@
   <div id="playArea">
     <div id="left">
       <div id="FlashcardHint"></div>
-      <form id="form" v-on:submit="answerSubmitHandler">
+      <form id="form" v-on:submit.prevent="answerSubmitHandler">
         <!-- <label> Check Answers </label> -->
         <input
           type="text"
@@ -15,17 +15,22 @@
     </div>
     <div id="right">
       <div id="timer">
-        <p>thing</p>
-        <button v-on:click="sortScoreboard">Sort Scoreboard</button>
-        <ul>
+        <p>Leaderboard</p>
+        <!-- <button v-on:click="sortScoreboard">Sort Scoreboard</button> -->
+        <ol>
           <li v-for="item in sortScoreboard(scores)" v-bind:key="(item.name, item.score)">
             <p>{{item.name}}: {{item.points}}</p>
           </li>
-        </ul>
+        </ol>
       </div>
       
       <div id="log">
-        <p>log</p>
+        <p>Guesses</p>
+        <ul>
+          <li v-for="item in guesses" v-bind:key="item">
+            <p>{{item}}</p>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -44,6 +49,7 @@ export default {
     return {
       answerInput: "",
       scores: [],
+      guesses: [],
     };
   },
   created() {
@@ -58,11 +64,23 @@ export default {
   },
   methods: {
     answerSubmitHandler() {
-      //make firebase call to get answers
-      let answers = [{ key: "jacob", val: "monke" }];
+      let answers = [];
       let flashcardKey = "jacob";
+      let collectionName = "Countries"
+
+      firebase.firestore().collection("collections").doc(collectionName).collection("cards").get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          answers.push(doc.data());
+        })
+      })
+      console.log("answers", answers);
+      this.guesses.push(this.answerInput);
+      
       //console.log("lesgo");
-      this.checkAnswer(this.answerInput, flashcardKey, answers);
+      let correct = this.checkAnswer(this.answerInput, flashcardKey, answers);
+      if(correct){
+        this.guesses.push("GUESS CORRECT!");
+      }
     },
     checkAnswer(userInput, key, answers) {
       for (let i = 0; i < answers.length; i++) {
