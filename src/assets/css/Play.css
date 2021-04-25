@@ -13,6 +13,9 @@
 
 #backup-leave {
     display: none;
+    position: absolute;
+    top: 40%;
+    left: 170px;
 }
 
 #right {
