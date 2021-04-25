@@ -21,7 +21,7 @@
       </div>
       <div id="right">
         <div id="timer">
-          <h3>Leaderboard</h3>
+          <h3>Leaderboard: </h3>
           <ul>
             <li
               v-for="item in sortScoreboard(scores)"
