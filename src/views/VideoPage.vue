@@ -107,12 +107,6 @@ export default {
     //       console.log(this.answer);
     //     });
     // }
-    firebase.firestore().collections("meetings").doc("please").collection("users").onSnapshot(querySnapshot => {
-      querySnapshot.forEach(doc => {
-        //update stuff
-        console.log(doc);
-      })
-    })
   },
 
   data() {
@@ -138,12 +132,24 @@ export default {
       answerInput: "",
       collection: "",
       key: "",
-      scores: [
-        { name: "lesgo", score: 100 },
-        { name: "pull up", score: -10000 },
-        { name: "convertible", score: 12000 },
-      ],
+      scores: [],
     };
+  },
+  created() {
+
+    firebase
+      .firestore()
+      .collection("meetings")
+      .doc("please")
+      .collection("users")
+      .onSnapshot(querySnapshot => {
+        let storeScores = []
+        querySnapshot.forEach(doc => {
+          //update stuff
+          storeScores.push(doc.data());
+        })
+        this.scores = storeScores;
+      })
   },
   methods: {
     load() {
@@ -302,7 +308,6 @@ export default {
       // }
       this.checkAnswer(this.answerInput);
       let answers = [];
-      let flashcardKey = "jacob";
       let collectionName = "Countries"
 
       firebase.firestore().collection("collections").doc(collectionName).collection("cards").get().then(querySnapshot => {
@@ -314,7 +319,7 @@ export default {
       this.guesses.push(this.answerInput);
       
       //console.log("lesgo");
-      let correct = this.checkAnswer(this.answerInput, flashcardKey, answers);
+      let correct = this.checkAnswer(this.answerInput);
       if(correct){
         this.guesses.push("GUESS CORRECT!");
       }
@@ -348,15 +353,9 @@ export default {
         });
     },
     sortScoreboard(scores) {
-      scores = [
-        { name: "Jason", score: 500 },
-        { name: "Saarang", score: 1000 },
-        { name: "Jacob", score: 100 },
-        { name: "Atli", score: 0 },
-      ];
       for (let i = 0; i < scores.length; i++) {
         for (let j = 0; j < scores.length - 1; j++) {
-          if (scores[j].score < scores[j + 1].score) {
+          if (scores[j].points < scores[j + 1].points) {
             let tmp = scores[j];
             scores[j] = scores[j + 1];
             scores[j + 1] = tmp;
