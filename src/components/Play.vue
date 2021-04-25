@@ -51,6 +51,20 @@
             }
           }
         }
+      },
+      sortScoreboard(scores) {
+        scores = [{name: "Jason", score: 500}, {name: "Saarang", score: 1000}, {name: "Jacob", score: 100}, {name: "Atli", score: 0}];
+        for (let i = 0; i < scores.length; i++) {
+          for (let j = 0; j < scores.length - 1; j++) {
+            if (scores[j].score < scores[j + 1].score) {
+                let tmp = scores[j];
+                scores[j] = scores[j + 1];
+                scores[j + 1] = tmp;
+            }
+          }
+        }
+        console.log(scores);
+        return scores;
       }
     }
   }
