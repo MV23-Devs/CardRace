@@ -444,7 +444,7 @@ export default {
         })
         .then(() => {
           console.log(state);
-
+          console.log("cards", this.cards)
           if (userInput == this.cards[0].key) {
             let temp = this.cards[0].key;
 
