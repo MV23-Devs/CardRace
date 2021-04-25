@@ -7,6 +7,7 @@
       <!-- <input type="text" id="input-code" placeholder="Meeting ID" /> -->
       <!-- <p>Message Here</p> -->
       <img src="@/assets/logo_size.png" alt="" width="100px" height="100px">
+      <h2>CARD RACER</h2>
       <button v-on:click="goToVideoPage" id="joinBtn">Join</button>
     </div>
   </div>
