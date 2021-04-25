@@ -21,10 +21,7 @@
       </div>
       <div id="right">
         <div id="timer">
-          <!-- <button class="submit" v-on:click="sortScoreboard">
-            Sort Scoreboard
-          </button> -->
-          <p id="heading">Leaderboard: </p >
+          <h3>Leaderboard</h3>
           <ul>
             <li
               v-for="item in sortScoreboard(scores)"
@@ -360,7 +357,7 @@ export default {
       //console.log("lesgo");
       let correct = this.checkAnswer(this.answerInput);
       if (correct) {
-        this.guesses.push("GUESS CORRECT!");
+        this.guesses.push("CORRECT GUESS!");
       }
     },
     checkAnswer(userInput) {
