@@ -183,7 +183,13 @@ export default {
                 val: doc.data().val,
               });
           });
-        });
+        }).then(() => {
+          firebase.firestore().collection("meetings").doc("please").set({
+            active: true,
+          })
+        })
+
+
     },
 
     mute() {
