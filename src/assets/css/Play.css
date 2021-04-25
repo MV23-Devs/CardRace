@@ -72,6 +72,8 @@
     right: 25px ;
     box-shadow: 0px 0px 5px #00000077;
     border-radius: 2px;
+    overflow: hidden;
+
 }
 
 #timer {
@@ -85,6 +87,7 @@
     margin: auto;
     box-shadow: 0px 0px 5px #00000077;
     border-radius: 2px;
+    overflow: hidden;
 }
 
 #answerInput {
