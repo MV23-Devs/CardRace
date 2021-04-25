@@ -10,7 +10,7 @@
     </div>
     <div id="right">
         <div id="timer">
-          a
+          <button v-on:click="sortScoreboard">Sort Scoreboard</button>
         </div>
         <div id="log">
           a
