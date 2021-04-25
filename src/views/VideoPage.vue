@@ -204,10 +204,23 @@ export default {
     },
 
     answerSubmitHandler() {
-      //make firebase call to get answers
-      let flashcardKey = "Russia";
+      let answers = [];
+      let flashcardKey = "jacob";
+      let collectionName = "Countries"
+
+      firebase.firestore().collection("collections").doc(collectionName).collection("cards").get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          answers.push(doc.data());
+        })
+      })
+      console.log("answers", answers);
+      this.guesses.push(this.answerInput);
+      
       //console.log("lesgo");
-      this.checkAnswer(this.answerInput, "Test", flashcardKey);
+      let correct = this.checkAnswer(this.answerInput, flashcardKey, answers);
+      if(correct){
+        this.guesses.push("GUESS CORRECT!");
+      }
     },
     checkAnswer(userInput, collection, key) {
       // let response = false;
