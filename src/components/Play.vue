@@ -18,8 +18,8 @@
         <p>thing</p>
         <button v-on:click="sortScoreboard">Sort Scoreboard</button>
         <ul>
-          <li v-for="item in scores" v-bind:key="(item.name, item.score)">
-            <p>{{item.name}}: {{item.score}}</p>
+          <li v-for="item in sortScoreboard(scores)" v-bind:key="(item.name, item.score)">
+            <p>{{item.name}}: {{item.points}}</p>
           </li>
         </ul>
       </div>
@@ -32,6 +32,9 @@
 </template>
 
 <script>
+import { firebase } from "@firebase/app";
+import "firebase/auth";
+
 export default {
   name: "Play",
   props: {
@@ -40,8 +43,18 @@ export default {
   data() {
     return {
       answerInput: "",
-      scores: [{name: "lesgo", score: 100}, {name: "pull up", score: -10000}, {name: "convertible", score: 12000}]
+      scores: [],
     };
+  },
+  created() {
+    firebase.firestore().collection("meetings").doc("please").collection("users").get().then((querySnapshot) => {
+      let storeScores = [];
+      querySnapshot.forEach((doc) => {
+        storeScores.push(doc.data());
+      })
+      console.log(storeScores);
+      this.scores = storeScores;
+    })
   },
   methods: {
     answerSubmitHandler() {
@@ -66,19 +79,18 @@ export default {
       }
     },
     sortScoreboard(scores) {
-        scores = [{name: "Jason", score: 500}, {name: "Saarang", score: 1000}, {name: "Jacob", score: 100}, {name: "Atli", score: 0}];
-        for (let i = 0; i < scores.length; i++) {
-          for (let j = 0; j < scores.length - 1; j++) {
-            if (scores[j].score < scores[j + 1].score) {
-                let tmp = scores[j];
-                scores[j] = scores[j + 1];
-                scores[j + 1] = tmp;
-            }
+      for (let i = 0; i < scores.length; i++) {
+        for (let j = 0; j < scores.length - 1; j++) {
+          if (scores[j].score < scores[j + 1].score) {
+              let tmp = scores[j];
+              scores[j] = scores[j + 1];
+              scores[j + 1] = tmp;
           }
         }
-        console.log(scores);
-        return scores;
       }
+      console.log(scores);
+      return scores;
+    }
   },
 };
 </script>
