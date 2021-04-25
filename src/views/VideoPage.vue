@@ -469,13 +469,15 @@ export default {
                 .delete();
 
               this.cards.shift();
-              if (this.cards[0]) {
+              if (this.cards[0] != null) {
                 this.val = this.cards[0].val;
 
                 // game is over
                 firebase.firestore().collection("meetings").doc("please").set({
                   active: false,
                 });
+              } else {
+                this.val = "";
               }
 
               firebase
