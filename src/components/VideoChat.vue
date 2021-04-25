@@ -1,57 +1,45 @@
 <template>
   <div class="hello">
     <div class="agora-title-box">
-      <div class="agora-title">Card Racer</div>
+      <div class="agora-title">Agora Basic Video Call</div>
     </div>
-    <div class="agora-box" id="MainBox">
-      <!-- <div class="agora-input">
+    <div class="agora-box">
+      <div class="agora-input">
         <div class="agora-text">* Appid</div>
         <el-input
           v-model="option.appid"
           placeholder="Appid"
           clearable
         ></el-input>
-      </div> -->
+      </div>
+      <div class="agora-input">
+        <div class="agora-text">Token</div>
+        <el-input
+          v-model="option.token"
+          placeholder="Token"
+          clearable
+        ></el-input>
+      </div>
       <div class="agora-input">
         <div class="agora-text">* Channel Name</div>
-        <input
+        <el-input
           v-model="option.channel"
           placeholder="Channel Name"
           clearable
-         />
+        ></el-input>
       </div>
-
       <div class="agora-button">
-        <button
-          type="primary"
-          class="Buttons1"
-          id="JoinBtn"
-          @click="joinEvent"
-          :disabled="disableJoin"
-          >Join</button>
-        <br />
-        <!-- <el-button
+        <el-button type="primary" @click="joinEvent" :disabled="disableJoin"
+          >join</el-button
+        >
+        <el-button
           type="primary"
           @click="leaveEvent"
           plain
           :disabled="!disableJoin"
-          class="Buttons1"
-          id="LeaveBtn"
-          >Leave
-        </el-button> -->
+          >leave</el-button
+        >
       </div>
-    </div>
-    <button
-      type="primary"
-      @click="leaveEvent"
-      plain
-      :disabled="!disableJoin"
-      class="Buttons1"
-      id="LeaveBtn"
-      >Leave
-    </button>
-    <div id="meetingControls">
-      <!-- <button @click="disableVideo">Disable Video</button> -->
     </div>
     <div class="agora-view">
       <div class="agora-video">
@@ -79,8 +67,7 @@
 import RTCClient from "../agora-rtc-client";
 import StreamPlayer from "./stream-player";
 import { log } from "../utils/utils";
-// import { firebase } from "@firebase/app";
-// import "firebase/auth";
+
 export default {
   components: {
     StreamPlayer,
@@ -102,11 +89,9 @@ export default {
   props: {
     msg: String,
   },
+
   methods: {
-    disableVideo() {},
     joinEvent() {
-      // document.getElementById("MainBox").classList.add("hide");
-      // this.$parent.showNotVideo();
       if (!this.option.appid) {
         this.judge("Appid");
         return;
@@ -115,21 +100,20 @@ export default {
         this.judge("Channel Name");
         return;
       }
-      this.$router.push("/VideoPage");
       this.rtc
         .joinChannel(this.option)
         .then(() => {
-          // this.$message({
-          //   message: "Join Success",
-          //   type: "success",
-          // });
+          this.$message({
+            message: "Join Success",
+            type: "success",
+          });
           this.rtc
             .publishStream()
             .then((stream) => {
-              // this.$message({
-              //   message: "Publish Success",
-              //   type: "success",
-              // });
+              this.$message({
+                message: "Publish Success",
+                type: "success",
+              });
               this.localStream = stream;
             })
             .catch((err) => {
@@ -138,30 +122,25 @@ export default {
             });
         })
         .catch((err) => {
-          // this.$message.error("Join Failure");
-          console.error("something went wrong :(, not pog", err)
+          this.$message.error("Join Failure");
           log("join channel error", err);
         });
-      // this.disableJoin = false;
-      // console.log("disableJoin = true");
+      this.disableJoin = true;
     },
     leaveEvent() {
-      this.$router.push("/");
       this.disableJoin = false;
-      console.log("disableJoin = false");
       this.rtc
         .leaveChannel()
-        // .then(() => {
-        //   this.$message({
-        //     message: "Leave Success",
-        //     type: "success",
-        //   });
-
-        // })
-        // .catch((err) => {
-        //   this.$message.error("Leave Failure");
-        //   log("leave error", err);
-        // });
+        .then(() => {
+          this.$message({
+            message: "Leave Success",
+            type: "success",
+          });
+        })
+        .catch((err) => {
+          this.$message.error("Leave Failure");
+          log("leave error", err);
+        });
       this.localStream = null;
       this.remoteStreams = [];
     },
@@ -182,6 +161,7 @@ export default {
       log("[agora] [stream-added] stream-added", stream.getId());
       rtc.client.subscribe(stream);
     });
+
     rtc.on("stream-subscribed", (evt) => {
       let { stream } = evt;
       log("[agora] [stream-subscribed] stream-added", stream.getId());
@@ -189,6 +169,7 @@ export default {
         this.remoteStreams.push(stream);
       }
     });
+
     rtc.on("stream-removed", (evt) => {
       let { stream } = evt;
       log("[agora] [stream-removed] stream-removed", stream.getId());
@@ -196,11 +177,13 @@ export default {
         (it) => it.getId() !== stream.getId()
       );
     });
+
     rtc.on("peer-online", (evt) => {
       this.$message(`Peer ${evt.uid} is online`);
     });
+
     rtc.on("peer-leave", (evt) => {
-      this.$message(`Peer ${evt.uid} left`);
+      this.$message(`Peer ${evt.uid} already leave`);
       this.remoteStreams = this.remoteStreams.filter(
         (it) => it.getId() !== evt.uid
       );
@@ -210,21 +193,43 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-
-
-<style>
-video {
-  position: relative !important;
-  /* padding: 20px; */
-  /* margin: 100px; */
-  background-color: red;
+<style scoped>
+.agora-box {
 }
-</style>
-<style scoped src="../assets/css/Call.css">
-  .hide {
-    display: none;
-  }
-  .show {
-    display: inline-block;
-  }
+.agora-title {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
+  color: #2c3e50;
+}
+.agora-view {
+  display: flex;
+  flex-wrap: wrap;
+}
+.agora-video {
+  margin: 10px;
+}
+.agora-video-player {
+}
+
+.agora-input {
+  margin: 20px;
+  width: 320px;
+}
+.agora-text {
+  margin: 5px;
+  font-size: 16px;
+  font-weight: bold;
+}
+.agora-button {
+  display: flex;
+  width: 160px;
+  justify-content: space-between;
+  margin: 20px;
+}
+.agora-video {
+  width: 320px;
+  height: 240px;
+}
 </style>

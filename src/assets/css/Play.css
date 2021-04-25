@@ -1,0 +1,16 @@
+#playArea {
+    background-color: gray;
+    display: flexbox;
+}
+
+#right {
+    background-color: blue;
+    width: 50%;
+    display: inline-block;
+}
+
+#left {
+    background-color: red;
+    width: 50%;
+    display: inline-block;
+}
