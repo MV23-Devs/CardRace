@@ -22,13 +22,20 @@
       <div id="right">
         <div id="timer">
           <h3>Leaderboard: 🏆</h3>
-          <ul>
-            <li v-for="item in sortScoreboard(scores)" v-bind:key="item.name">
-              <p>{{ item.name }}</p>
-            </li>
-            <li v-for="item in sortScoreboard(scores)" v-bind:key="item.points">
-              <p>{{ item.points }}</p>
-            </li>
+          <ul id="leaderParent">
+            <div id="left-small">
+              <li v-for="item in sortScoreboard(scores)" v-bind:key="item.name">
+                <p>{{ item.name }}</p>
+              </li>
+            </div>
+            <div id="right-small">
+              <li
+                v-for="item in sortScoreboard(scores)"
+                v-bind:key="item.points"
+              >
+                <p>{{ item.points }}</p>
+              </li>
+            </div>
           </ul>
         </div>
         <div id="log">
@@ -363,6 +370,9 @@ export default {
             }
             console.log(this.cards);
             this.val = this.cards[0].val;
+            if (this.cards[0] == undefined) {
+              document.location.href = "/";
+            }
           });
         });
     },
