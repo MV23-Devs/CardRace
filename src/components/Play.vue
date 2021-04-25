@@ -81,7 +81,7 @@ export default {
     sortScoreboard(scores) {
       for (let i = 0; i < scores.length; i++) {
         for (let j = 0; j < scores.length - 1; j++) {
-          if (scores[j].score < scores[j + 1].score) {
+          if (scores[j].points < scores[j + 1].points) {
               let tmp = scores[j];
               scores[j] = scores[j + 1];
               scores[j + 1] = tmp;
