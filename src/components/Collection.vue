@@ -104,3 +104,7 @@ export default {
 
 <style scoped src="../assets/css/Join.css">
 </style>
+
+<style  src="../assets/css/Collection.css">
+
+</style>
