@@ -158,6 +158,32 @@ export default {
                   });
               }
             });
+          document.getElementById("playArea").classList.add("playVisible")
+          if (size == 0) {
+            firebase
+              .firestore()
+              .collection("meetings")
+              .doc(this.option.channel)
+              .collection("users")
+              .doc(this.user)
+              .set({
+                name: this.user,
+                points: 0,
+                host: true,
+              });
+          } else {
+            firebase
+              .firestore()
+              .collection("meetings")
+              .doc(this.option.channel)
+              .collection("users")
+              .doc(this.user)
+              .set({
+                name: this.user,
+                points: 0,
+                host: false,
+              });
+          }
 
           this.$emit("changeUsername", this.user);
 
@@ -213,6 +239,7 @@ export default {
         });
       this.localStream = null;
       this.remoteStreams = [];
+      document.location.href = "/"
     },
     judge(detail) {
       this.$notify({
@@ -264,6 +291,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style >
+.hello {
+  margin: auto;
+}
 .hidden {
   display: none;
   height: 0px;
@@ -326,5 +356,9 @@ div[role="alert"] {
   border-top: 1px solid black;
   padding-top: 15px;
   bottom: 5px;
+}
+
+.playVisible {
+    display: inline-flex;
 }
 </style>
