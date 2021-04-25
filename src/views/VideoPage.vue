@@ -28,8 +28,10 @@
         </p>
     </div> -->
       <div id="left">
-        <div id="FlashcardHint"></div>
-        <form id="form" v-on:submit="answerSubmitHandler">
+        <div id="FlashcardHint">
+          {{ val }}
+        </div>
+        <form id="form" v-on:submit.prevent="answerSubmitHandler">
           <!-- <label> Check Answers </label> -->
           <input
             type="text"
@@ -126,7 +128,7 @@ export default {
     return {
       collections: [],
       cards: [],
-      val: "",
+      val: "nigeria",
       name: "",
       current: "",
       ccurent: "",
