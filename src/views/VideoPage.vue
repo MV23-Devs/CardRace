@@ -5,7 +5,9 @@
 
     <div id="playArea">
       <div id="left">
-        <div id="FlashcardHint"></div>
+        <div id="FlashcardHint">
+          {{ val }}
+        </div>
         <form id="" v-on:submit.prevent="answerSubmitHandler">
           <label> Check Answers </label>
           <input type="text" id="answerInput" v-model="answerInput" />
@@ -104,7 +106,7 @@ export default {
       collections: [],
       selection: "",
       cards: [],
-      val: "nigeria",
+      val: "",
       name: "",
       current: "",
       ccurent: "",
@@ -166,6 +168,24 @@ export default {
 
       firebase
         .firestore()
+        .collection("meetings")
+        .doc("please")
+        .collection("cards")
+        .get()
+        .then((snapshot) => {
+          snapshot.docs.forEach((doc) => {
+            firebase
+              .firestore()
+              .collection("meetings")
+              .doc("please")
+              .collection("cards")
+              .doc(doc.data().key)
+              .delete();
+          });
+        });
+
+      firebase
+        .firestore()
         .collection("collections")
         .doc(this.selection)
         .collection("cards")
@@ -183,13 +203,38 @@ export default {
                 val: doc.data().val,
               });
           });
-        }).then(() => {
+        })
+        .then(() => {
           firebase.firestore().collection("meetings").doc("please").set({
             active: true,
-          })
+          });
         })
+        .then(() => {
+          this.setup();
+        });
+    },
 
+    setup() {
+      firebase
+        .firestore()
+        .collection("meetings")
+        .doc("please")
+        .collection("cards")
+        .get()
+        .then((snapshot) => {
+          snapshot.docs.map((doc) => {
+            this.cards.push({ key: doc.data().key, val: doc.data().val });
+          });
+        });
 
+      for (var i = this.cards.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = this.cards[i];
+        this.cards[i] = this.cards[j];
+        this.cards[j] = temp;
+      }
+
+      this.val = this.cards[0].val;
     },
 
     mute() {
@@ -210,58 +255,56 @@ export default {
     },
 
     answerSubmitHandler() {
-      let answers = [];
-      let flashcardKey = "jacob";
-      let collectionName = "Countries"
+      // let answers = [];
+      // let collectionName = "Countries";
 
-      firebase.firestore().collection("collections").doc(collectionName).collection("cards").get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          answers.push(doc.data());
-        })
-      })
-      console.log("answers", answers);
-      this.guesses.push(this.answerInput);
-      
-      //console.log("lesgo");
-      let correct = this.checkAnswer(this.answerInput, flashcardKey, answers);
-      if(correct){
-        this.guesses.push("GUESS CORRECT!");
-      }
+      // firebase
+      //   .firestore()
+      //   .collection("collections")
+      //   .doc(collectionName)
+      //   .collection("cards")
+      //   .get()
+      //   .then((querySnapshot) => {
+      //     querySnapshot.forEach((doc) => {
+      //       answers.push(doc.data());
+      //     });
+      //   });
+      // console.log("answers", answers);
+      // this.guesses.push(this.answerInput);
+
+      // //console.log("lesgo");
+      // let correct = this.checkAnswer(this.answerInput);
+      // if (correct) {
+      //   this.guesses.push("GUESS CORRECT!");
+      // }
+      this.checkAnswer(this.answerInput);
     },
-    checkAnswer(userInput, collection, key) {
+    checkAnswer(userInput) {
       // let response = false;
+
+      if (userInput == this.cards[0].key) {
+        console.log("Correct");
+      }
+      let score = 0;
 
       firebase
         .firestore()
-        .collection("collections")
-        .doc(collection)
-        .collection("cards")
-        .doc(key)
+        .collection("meetings")
+        .doc("please")
+        .collection("users")
+        .doc(this.user)
         .get()
         .then((doc) => {
-          if (doc.data().val == this.answerInput) {
-            let score = 0;
-
-            firebase
-              .firestore()
-              .collection("meetings")
-              .doc("please")
-              .collection("users")
-              .doc(this.user)
-              .get()
-              .then((doc) => {
-                score = doc.data().points;
-                firebase
-                  .firestore()
-                  .collection("meetings")
-                  .doc("please")
-                  .collection("users")
-                  .doc(this.user)
-                  .set({
-                    points: score + 5,
-                  });
-              });
-          }
+          score = doc.data().points;
+          firebase
+            .firestore()
+            .collection("meetings")
+            .doc("please")
+            .collection("users")
+            .doc(this.user)
+            .set({
+              points: score + 5,
+            });
         });
     },
     sortScoreboard(scores) {
