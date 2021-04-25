@@ -1,36 +1,68 @@
 #playArea {
-    background-color: gray;
-    display: flex;
+    /* background-color: gray; */
+    
+    display: none;
     flex-direction: column;
+    width: 70% !important;
 
+}
+
+.playVisible {
+    display: inline-flex !important;
+}
+
+#backup-leave {
+    display: none;
+    position: absolute;
+    top: 40%;
+    left: 170px;
 }
 
 #right {
     /* background-color: blue; */
-
     width: 30%;
     display: inline-block;
     flex: 1;
-
 }
+.hidden {
+    display: none;
+}
+
+.show {
+    display: inline-block !important;
+}
+
 
 #left {
     flex: 1;
     /* background-color: red; */
-
     width: 70%;
     display: inline-block;
 }
+
+#VideoPage {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
 #FlashcardHint {
     width: 100% - 60px;
-    height: 50vh !important;
+    height: 27vh !important;
     margin: auto;
     margin: 30px;
     box-shadow: 0px 0px 10px #00000077;
     border-radius: 2px;
+    font-size: 3vw;
+    vertical-align: middle;
+    text-align: center;
+    padding-top:12vh;
     /* margin-top: 0px; */
     /* border: 1px solid black; */
+}
 
+#FlashcardHint {
+    text-align: center;
 }
 
 #log {
@@ -40,21 +72,25 @@
     margin: auto;
     position: absolute;
     bottom: 75px;
+    right: 25px ;
     box-shadow: 0px 0px 5px #00000077;
     border-radius: 2px;
+    overflow: hidden;
 
 }
 
 #timer {
     /* border: 1px solid #999; */
     width: 20%;
-    height: 20vh;
+    height: 30vh;
     /* position: absolute; */
     position: absolute;
     top: 75px;
+    right: 25px;
     margin: auto;
     box-shadow: 0px 0px 5px #00000077;
     border-radius: 2px;
+    overflow: hidden;
 }
 
 #answerInput {
@@ -65,28 +101,64 @@
     padding-left: 15px;
 }
 
-#submit {
+#vidChat {
+    top: 75px;
+    width: 30% !important;
+    display: inline-block;
+}
 
+#callStuff {
+    width: 100%;
+    display: flex;
+}
+
+.submit {
     outline: none;
     margin: 5px;
     border-radius: 20px;
     border: 1px solid #409EFF;
     background-color: #409EFF;
+    color: white;
     padding: 5px;
     padding-left: 10px;
     padding-right: 10px;
     display: inline;
     transition: all 0.3s;
-
 }
 
-#submit:hover {
+.submit:hover {
     transition: all 0.3s;
     background-color: #66b1ff;
 }
 
 #form {
     margin-top: 10%;
+}
+
+#leaderParent {
+    display: flex;
+}
+
+#left-small {
+    width: 50%;
+    display: inline;
+        flex: 1;
+}
+#right-small {
+    display: inline;
+    flex: 1;
+    width: 50%;
+}
+
+#host-controls {
+    display: none;
+    z-index: 100;
+    position: absolute;
+    bottom: 80px;
+    left: 10px;
+    padding: 15px;
+    border: 1px solid black;
+    border-radius: 20px;
 }
 
 #test {
@@ -105,5 +177,32 @@
     font-size: 25px;
     width: 20%;
     margin: auto;
+}
+
+#dropdown {
+    align-self: center;
+    width: 150px !important;
+    display: block;
+    margin-top: 10px;
+    padding: 5px;
+    border-radius: 15px;
+    outline: none;
+    background-color: white;
+}
+
+#dropdown-options {
+    background-color: white;
+    padding: 5px;
+    border-radius: 0px;
+}
+
+#dropdown-options:last-of-type {
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+#dropdown:active {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
 
 }

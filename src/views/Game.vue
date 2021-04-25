@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <VideoPage id="callStuff" />
-    <Play id="cards" />
+    <!-- <Play id="cards" /> -->
   </div>
   <!-- <div id="notVideo">  -->
 
@@ -12,14 +12,14 @@
 import VideoPage from "@/views/VideoPage.vue";
 // @ is an alias to /src
 // import Call from '@/components/Call.vue'
-import Play from "@/components/Play.vue";
+// import Play from "@/components/Play.vue";
 
 export default {
   name: "Home",
   components: {
     // Call
     VideoPage,
-    Play,
+    // Play,
   },
 
   data() {
@@ -37,10 +37,10 @@ export default {
 .home {
   display: flex;
 }
-#callStuff {
+/* #callStuff {
   width: 30% !important;
   display: inline-block;
-}
+} */
 #cards {
   width: 70% !important;
   display: inline-block;
