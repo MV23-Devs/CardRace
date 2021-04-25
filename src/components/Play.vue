@@ -65,11 +65,23 @@ export default {
   },
   methods: {
     answerSubmitHandler() {
-      //make firebase call to get answers
-      let answers = [{ key: "jacob", val: "monke" }];
+      let answers = [];
       let flashcardKey = "jacob";
+      let collectionName = "Countries"
+
+      firebase.firestore().collection("collections").doc(collectionName).collection("cards").get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          answers.push(doc.data());
+        })
+      })
+      console.log("answers", answers);
+      this.guesses.push(this.answerInput);
+      
       //console.log("lesgo");
-      this.checkAnswer(this.answerInput, flashcardKey, answers);
+      let correct = this.checkAnswer(this.answerInput, flashcardKey, answers);
+      if(correct){
+        this.guesses.push("GUESS CORRECT!");
+      }
     },
     checkAnswer(userInput, key, answers) {
       for (let i = 0; i < answers.length; i++) {
