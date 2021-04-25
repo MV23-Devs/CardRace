@@ -33,7 +33,13 @@
             </li>
           </ul>
         </div>
-        <div id="log">a</div>
+        <div id="log">
+          <ul>
+            <li v-for="message in messages" :key="message">
+              {{ message }}
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
 
@@ -135,6 +141,7 @@ export default {
       micOn: true,
       camOn: true,
       players: [],
+      messages: [],
 
       answerInput: "",
       collection: "",
@@ -155,6 +162,18 @@ export default {
           storeScores.push(doc.data());
         });
         this.scores = storeScores;
+      });
+
+    firebase
+      .firestore()
+      .collection("meetings")
+      .doc("please")
+      .collection("logs")
+      .onSnapshot((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          //update stuff
+          this.messages.push(doc.data().message);
+        });
       });
   },
   methods: {
@@ -200,6 +219,32 @@ export default {
         .then(() => {
           if (host) {
             document.getElementById("host-controls").classList.add("show");
+          } else {
+            firebase
+              .firestore()
+              .collection("meetings")
+              .doc("please")
+              .collection("cards")
+              .onSnapshot((ref) => {
+                ref.docChanges().forEach((change) => {
+                  console.log("card change");
+                  const { newIndex, oldIndex, doc, type } = change;
+                  let temp = {
+                    key: doc.data().key,
+                    val: doc.data().val,
+                  };
+                  if (type === "added") {
+                    this.cards.push(temp);
+                  } else if (type === "modified") {
+                    this.cards.splice(oldIndex, 1);
+                    this.cards.splice(newIndex, 0, temp);
+                  } else if (type === "removed") {
+                    this.cards.splice(oldIndex, 1);
+                  }
+                  console.log(this.cards);
+                  this.val = this.cards[0].val;
+                });
+              });
           }
         });
     },
@@ -281,23 +326,25 @@ export default {
         .collection("meetings")
         .doc("please")
         .collection("cards")
-        .get()
-        .then((snapshot) => {
-          snapshot.docs.map((doc) => {
-            this.cards.push({ key: doc.data().key, val: doc.data().val });
+        .onSnapshot((ref) => {
+          ref.docChanges().forEach((change) => {
+            console.log("card change");
+            const { newIndex, oldIndex, doc, type } = change;
+            let temp = {
+              key: doc.data().key,
+              val: doc.data().val,
+            };
+            if (type === "added") {
+              this.cards.push(temp);
+            } else if (type === "modified") {
+              this.cards.splice(oldIndex, 1);
+              this.cards.splice(newIndex, 0, temp);
+            } else if (type === "removed") {
+              this.cards.splice(oldIndex, 1);
+            }
+            console.log(this.cards);
+            this.val = this.cards[0].val;
           });
-        })
-        .then(() => {
-          for (var i = this.cards.length - 1; i > 0; i--) {
-            var j = Math.floor(Math.random() * (i + 1));
-            var temp = this.cards[i];
-            this.cards[i] = this.cards[j];
-            this.cards[j] = temp;
-          }
-
-          console.log(this.cards[0]);
-
-          this.val = this.cards[0].val;
         });
     },
 
@@ -366,37 +413,73 @@ export default {
       }
     },
     checkAnswer(userInput) {
-      // let response = false;
+      let state = false;
 
-      if (userInput == this.cards[0].key) {
-        this.cards.shift();
-        if(this.cards[0]) {
-          this.val = this.cards[0].val;
+      firebase
+        .firestore()
+        .collection("meetings")
+        .doc("please")
+        .get()
+        .then((doc) => {
+          state = doc.data().active;
+          // state = doc.data().active;
+        })
+        .then(() => {
+          console.log(state);
 
-          // game is over
-        }
-        let score = 0;
+          if (userInput == this.cards[0].key) {
+            let temp = this.cards[0].key;
 
-        firebase
-          .firestore()
-          .collection("meetings")
-          .doc("please")
-          .collection("users")
-          .doc(this.user)
-          .get()
-          .then((doc) => {
-            score = doc.data().points;
+            firebase
+              .firestore()
+              .collection("meetings")
+              .doc("please")
+              .collection("cards")
+              .doc(temp)
+              .delete();
+
+            this.cards.shift();
+            if (this.cards[0]) {
+              this.val = this.cards[0].val;
+
+              // game is over
+              firebase.firestore().collection("meetings").doc("please").set({
+                active: false,
+              });
+            }
+
+            firebase
+              .firestore()
+              .collection("meetings")
+              .doc("please")
+              .collection("logs")
+              .add({
+                message: this.user + " has scored 5 points",
+              });
+
+            let score = 0;
+
             firebase
               .firestore()
               .collection("meetings")
               .doc("please")
               .collection("users")
               .doc(this.user)
-              .set({
-                points: score + 5,
+              .get()
+              .then((doc) => {
+                score = doc.data().points;
+                firebase
+                  .firestore()
+                  .collection("meetings")
+                  .doc("please")
+                  .collection("users")
+                  .doc(this.user)
+                  .set({
+                    points: score + 5,
+                  });
               });
-          });
-      }
+          }
+        });
     },
     sortScoreboard(scores) {
       for (let i = 0; i < scores.length; i++) {

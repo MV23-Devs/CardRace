@@ -5,30 +5,6 @@
     </div>
     <div class="agora-box">
       <div class="agora-input">
-        <div class="agora-text">* Appid</div>
-        <el-input
-          v-model="option.appid"
-          placeholder="Appid"
-          clearable
-        ></el-input>
-      </div>
-      <div class="agora-input">
-        <div class="agora-text">Token</div>
-        <el-input
-          v-model="option.token"
-          placeholder="Token"
-          clearable
-        ></el-input>
-      </div>
-      <div class="agora-input">
-        <div class="agora-text">* Channel Name</div>
-        <el-input
-          v-model="option.channel"
-          placeholder="Channel Name"
-          clearable
-        ></el-input>
-      </div>
-      <div class="agora-input">
         <div class="agora-text">* User Name</div>
         <el-input v-model="user" placeholder="User Name" clearable></el-input>
       </div>
@@ -158,7 +134,7 @@ export default {
                   });
               }
             });
-          document.getElementById("playArea").classList.add("playVisible")
+          document.getElementById("playArea").classList.add("playVisible");
           if (size == 0) {
             firebase
               .firestore()
@@ -221,7 +197,7 @@ export default {
       this.rtc
         .leaveChannel()
         .then(() => {
-          console.log(this.user)
+          console.log(this.user);
           firebase
             .firestore()
             .collection("meetings")
@@ -240,7 +216,7 @@ export default {
         });
       this.localStream = null;
       this.remoteStreams = [];
-      document.location.href = "/"
+      document.location.href = "/";
     },
     judge(detail) {
       this.$notify({
@@ -360,6 +336,6 @@ div[role="alert"] {
 }
 
 .playVisible {
-    display: inline-flex;
+  display: inline-flex;
 }
 </style>
