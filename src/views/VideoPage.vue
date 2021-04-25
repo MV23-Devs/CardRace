@@ -29,7 +29,7 @@
     </div> -->
       <div id="left">
         <div id="FlashcardHint">
-          {{ val }}
+          <p>{{ val }}</p>
         </div>
         <form id="form" v-on:submit.prevent="answerSubmitHandler">
           <!-- <label> Check Answers </label> -->
