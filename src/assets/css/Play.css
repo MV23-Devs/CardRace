@@ -6,12 +6,24 @@
 
 }
 
+#backup-leave {
+    display: none;
+}
+
 #right {
     /* background-color: blue; */
     width: 30%;
     display: inline-block;
     flex: 1;
 }
+.hidden {
+    display: none;
+}
+
+.show {
+    display: inline-block !important;
+}
+
 
 #left {
     flex: 1;
@@ -117,6 +129,9 @@
     position: absolute;
     bottom: 80px;
     left: 10px;
+    padding: 15px;
+    border: 1px solid black;
+    border-radius: 20px;
 }
 
 #test {

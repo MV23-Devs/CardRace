@@ -158,6 +158,7 @@ export default {
     },
 
     submitCards() {
+      document.getElementById("host-controls").classList.add("hidden")
       console.log("Hello");
 
       // firebase.firestore().collection("collections").doc(this.selection).get().then(doc => {
