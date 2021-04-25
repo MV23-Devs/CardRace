@@ -23,11 +23,11 @@
         <div id="timer">
           <h3>Leaderboard: 🏆</h3>
           <ul>
-            <li
-              v-for="item in sortScoreboard(scores)"
-              v-bind:key="(item.name, item.points)"
-            >
-              <p>{{ item.name }}: {{ item.points }}</p>
+            <li v-for="item in sortScoreboard(scores)" v-bind:key="item.name">
+              <p>{{ item.name }}</p>
+            </li>
+            <li v-for="item in sortScoreboard(scores)" v-bind:key="item.points">
+              <p>{{ item.points }}</p>
             </li>
           </ul>
         </div>
@@ -259,7 +259,9 @@ export default {
                     this.cards.splice(oldIndex, 1);
                   }
                   console.log(this.cards);
+                  // if (this.val) {
                   this.val = this.cards[0].val;
+                  // }
                 });
               });
           }
