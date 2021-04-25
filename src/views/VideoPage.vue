@@ -3,7 +3,7 @@
   <div id="VideoPage">
     <VideoChat id="vidChat" @changeUsername="changeUsername($event)" />
 
-    <!-- <div id="playArea">
+    <div id="playArea">
       <div id="left">
         <div id="FlashcardHint"></div>
         <form id="" v-on:submit.prevent="answerSubmitHandler">
@@ -18,7 +18,7 @@
         </div>
         <div id="log">a</div>
       </div>
-    </div> -->
+    </div>
 
     <div id="host-controls">
       <h3>Choose Collection to Play With</h3>

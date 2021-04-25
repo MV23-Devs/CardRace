@@ -112,6 +112,13 @@
     margin-top: 10%;
 }
 
+#host-controls {
+    z-index: 100;
+    position: absolute;
+    bottom: 80px;
+    left: 10px;
+}
+
 #test {
     z-index: 100;
     position: absolute;
