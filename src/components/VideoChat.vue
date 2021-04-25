@@ -110,18 +110,45 @@ export default {
       this.rtc
         .joinChannel(this.option)
         .then(() => {
+          let size = 0;
+
           firebase
             .firestore()
             .collection("meetings")
             .doc(this.option.channel)
             .collection("users")
-            .doc(this.user)
-            .set({
-              name: this.user,
-              points: 0,
+            .get()
+            .then((snap) => {
+              size = snap.size; // will return the collection size
             });
 
-          this.$emit('changeUsername', this.user);
+          if (size == 0) {
+            firebase
+              .firestore()
+              .collection("meetings")
+              .doc(this.option.channel)
+              .collection("users")
+              .doc(this.user)
+              .set({
+                name: this.user,
+                points: 0,
+                host: true,
+              });
+          } else {
+            firebase
+              .firestore()
+              .collection("meetings")
+              .doc(this.option.channel)
+              .collection("users")
+              .doc(this.user)
+              .set({
+                name: this.user,
+                points: 0,
+                host: false,
+              });
+          }
+
+          this.$emit("changeUsername", this.user);
 
           this.$message({
             message: "Join Success",

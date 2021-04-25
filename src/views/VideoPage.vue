@@ -20,43 +20,18 @@
       </div>
     </div> -->
 
-    <div id="playArea">
-      <!-- <div id="test">
-        How to play:
-        <p >
-            yayadsyfjsahfdlksasgfddddddddddddd
-        </p>
-    </div> -->
-      <div id="left">
-        <div id="FlashcardHint">
-          <p>{{ val }}</p>
-        </div>
-        <form id="form" v-on:submit.prevent="answerSubmitHandler">
-          <!-- <label> Check Answers </label> -->
-          <input
-            type="text"
-            placeholder="Answer Here"
-            id="answerInput"
-            v-model="answerInput"
-          />
-          <input type="submit" id="submit" />
-        </form>
-      </div>
-      <div id="right">
-        <div id="timer">
-          <p>thing</p>
-          <button v-on:click="sortScoreboard">Sort Scoreboard</button>
-          <ul>
-            <li v-for="item in scores" v-bind:key="(item.name, item.score)">
-              <p>{{ item.name }}: {{ item.score }}</p>
-            </li>
-          </ul>
-        </div>
-
-        <div id="log">
-          <p>log</p>
-        </div>
-      </div>
+    <div id="host-controls">
+      <h3>Choose Collection to Play With</h3>
+      <select v-model="selection" id="dropdown">
+        <option
+          id="dropdown-option"
+          v-for="item in collections"
+          :key="item.title"
+        >
+          {{ item.title }}
+        </option>
+      </select>
+      <button v-on:click="submitCards">Submit</button>
     </div>
 
     <div id="notVideo">
@@ -105,7 +80,7 @@ export default {
   },
 
   mounted() {
-    // this.load();
+    this.load();
     // if (firebase.auth().currentUser) {
     //   firebase
     //     .firestore()
@@ -127,6 +102,7 @@ export default {
   data() {
     return {
       collections: [],
+      selection: "",
       cards: [],
       val: "nigeria",
       name: "",
@@ -154,9 +130,60 @@ export default {
     };
   },
   methods: {
+    load() {
+      firebase
+        .firestore()
+        .collection("collections")
+        .onSnapshot((ref) => {
+          ref.docChanges().forEach((change) => {
+            const { newIndex, oldIndex, doc, type } = change;
+            let temp = {
+              title: doc.data().title,
+            };
+            if (type === "added") {
+              console.log(temp);
+              this.collections.push(temp);
+            } else if (type === "modified") {
+              this.collections.splice(oldIndex, 1);
+              this.collections.splice(newIndex, 0, temp);
+            } else if (type === "removed") {
+              this.collections.splice(oldIndex, 1);
+            }
+          });
+        });
+    },
     changeUsername(username) {
       this.user = username;
       console.log(this.user);
+    },
+
+    submitCards() {
+      console.log("Hello");
+
+      // firebase.firestore().collection("collections").doc(this.selection).get().then(doc => {
+      //   console.log(doc.data())
+      // })
+
+      firebase
+        .firestore()
+        .collection("collections")
+        .doc(this.selection)
+        .collection("cards")
+        .get()
+        .then((snapshot) => {
+          snapshot.docs.map((doc) => {
+            firebase
+              .firestore()
+              .collection("meetings")
+              .doc("please")
+              .collection("cards")
+              .doc(doc.data().key)
+              .set({
+                key: doc.data().key,
+                val: doc.data().val,
+              });
+          });
+        });
     },
 
     mute() {

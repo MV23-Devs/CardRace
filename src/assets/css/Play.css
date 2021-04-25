@@ -129,3 +129,9 @@
     width: 20%;
     margin: auto;
 }
+
+#dropdown {
+    width: 50px;
+    display: block;
+    margin-top: 10px;
+}
