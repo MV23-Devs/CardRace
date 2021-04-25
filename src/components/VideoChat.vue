@@ -28,6 +28,10 @@
           clearable
         ></el-input>
       </div>
+      <div class="agora-input">
+        <div class="agora-text">* User Name</div>
+        <el-input v-model="user" placeholder="User Name" clearable></el-input>
+      </div>
       <div class="agora-button">
         <el-button type="primary" @click="joinEvent" :disabled="disableJoin"
           >join</el-button
@@ -68,6 +72,8 @@ import RTCClient from "../agora-rtc-client";
 import StreamPlayer from "./stream-player";
 import { log } from "../utils/utils";
 
+import firebase from "firebase";
+
 export default {
   components: {
     StreamPlayer,
@@ -84,6 +90,7 @@ export default {
       disableJoin: false,
       localStream: null,
       remoteStreams: [],
+      user: "",
     };
   },
   props: {
@@ -103,6 +110,19 @@ export default {
       this.rtc
         .joinChannel(this.option)
         .then(() => {
+          firebase
+            .firestore()
+            .collection("meetings")
+            .doc(this.option.channel)
+            .collection("users")
+            .doc(this.user)
+            .set({
+              name: this.user,
+              points: 0,
+            });
+
+          this.$emit('changeUsername', this.user);
+
           this.$message({
             message: "Join Success",
             type: "success",
@@ -120,8 +140,10 @@ export default {
               this.$message.error("Publish Failure");
               log("publish local error", err);
             });
-            document.getElementsByClassName("agora-box")[0].classList.add("hidden")
-            console.error("yeet")
+          document
+            .getElementsByClassName("agora-box")[0]
+            .classList.add("hidden");
+          console.error("yeet");
         })
         .catch((err) => {
           this.$message.error("Join Failure");
@@ -134,6 +156,13 @@ export default {
       this.rtc
         .leaveChannel()
         .then(() => {
+          firebase
+            .firestore()
+            .collection("meetings")
+            .doc(this.option.channel)
+            .collection("users")
+            .doc(this.user)
+            .delete();
           this.$message({
             message: "Leave Success",
             type: "success",
@@ -197,12 +226,12 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style >
 .hidden {
-    display:none;
-    height: 0px;
-    overflow: hidden;
+  display: none;
+  height: 0px;
+  overflow: hidden;
 }
 .agora-box {
-    display: inline-block;
+  display: inline-block;
 }
 .agora-title {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -242,21 +271,21 @@ export default {
 }
 
 .iconButtons {
-    background-color: #00000000;
-    border: none;
+  background-color: #00000000;
+  border: none;
 }
 div[role="alert"] {
-    display: none;
+  display: none;
 }
 
 #notVideo {
-    height: 50px;
-    width: 100%;
-    align-items: center;
-    /* background-color: #999; */
-    position: absolute;
-    border-top: 1px solid black;
-    padding-top: 15px;
-    bottom: 5px;
+  height: 50px;
+  width: 100%;
+  align-items: center;
+  /* background-color: #999; */
+  position: absolute;
+  border-top: 1px solid black;
+  padding-top: 15px;
+  bottom: 5px;
 }
 </style>
