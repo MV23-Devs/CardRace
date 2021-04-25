@@ -4,7 +4,7 @@
       <div class="agora-title">Card-Race</div>
     </div>
     <div class="agora-box">
-      <div class="agora-input">
+      <!-- <div class="agora-input">
         <div class="agora-text">* Appid</div>
         <el-input
           v-model="option.appid"
@@ -19,7 +19,7 @@
           placeholder="Token"
           clearable
         ></el-input>
-      </div>
+      </div> -->
       <div class="agora-input">
         <div class="agora-text">* Channel Name</div>
         <el-input
