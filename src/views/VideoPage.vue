@@ -7,14 +7,14 @@
       <div id="left">
         <div id="FlashcardHint"></div>
         <form id="" v-on:submit.prevent="answerSubmitHandler">
-          <label> Check Answers </label>
-          <input type="text" id="answerInput" v-model="answerInput" />
-          <input type="submit" id="submit" />
+          <!-- <label> Check Answers </label> -->
+          <input type="text" id="answerInput" placeholder="Answer Here" v-model="answerInput" />
+          <input type="submit" id="submit" class="submit"/>
         </form>
       </div>
       <div id="right">
         <div id="timer">
-          <button v-on:click="sortScoreboard">Sort Scoreboard</button>
+          <button class="submit2" v-on:click="sortScoreboard">Sort Scoreboard</button>
           <ul>
             <li
               v-for="item in sortScoreboard(scores)"
@@ -30,7 +30,7 @@
 
     <div id="host-controls">
       <h3>Choose Collection to Play With</h3>
-      <select v-model="selection" id="dropdown">
+      <select v-model="selection" id="dropdown" >
         <option
           id="dropdown-option"
           v-for="item in collections"
@@ -39,7 +39,7 @@
           {{ item.title }}
         </option>
       </select>
-      <button v-on:click="submitCards">Submit</button>
+      <button v-on:click="submitCards" class="submit">Submit</button>
     </div>
 
     <div id="notVideo">
