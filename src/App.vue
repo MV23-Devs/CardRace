@@ -18,7 +18,7 @@
 }
 
 #nav {
-  height: 50px;
+  height: 40px;
   padding: 0px;
   background-color: #444;
   color: white;

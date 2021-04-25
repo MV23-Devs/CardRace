@@ -21,9 +21,10 @@
       </div>
       <div id="right">
         <div id="timer">
-          <button class="submit" v-on:click="sortScoreboard">
+          <!-- <button class="submit" v-on:click="sortScoreboard">
             Sort Scoreboard
-          </button>
+          </button> -->
+          <p id="heading">Leaderboard: </p >
           <ul>
             <li
               v-for="item in sortScoreboard(scores)"
