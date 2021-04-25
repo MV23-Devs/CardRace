@@ -1,57 +1,92 @@
 
 <template>
-  <div>
-    <div id="VideoPage">
-      <VideoChat id="vidChat" @changeUsername="changeUsername($event)" />
+  <div id="VideoPage">
+    <VideoChat id="vidChat" @changeUsername="changeUsername($event)" />
 
-      <div id="playArea">
-        <div id="left">
-          <div id="FlashcardHint"></div>
-          <form id="" v-on:submit.prevent="answerSubmitHandler">
-            <label> Check Answers </label>
-            <input type="text" id="answerInput" v-model="answerInput" />
-            <input type="submit" id="submit" />
-          </form>
+    <!-- <div id="playArea">
+      <div id="left">
+        <div id="FlashcardHint"></div>
+        <form id="" v-on:submit.prevent="answerSubmitHandler">
+          <label> Check Answers </label>
+          <input type="text" id="answerInput" v-model="answerInput" />
+          <input type="submit" id="submit" />
+        </form>
+      </div>
+      <div id="right">
+        <div id="timer">
+          <button v-on:click="sortScoreboard">Sort Scoreboard</button>
         </div>
-        <div id="right">
-          <div id="timer">
-            <button v-on:click="sortScoreboard">Sort Scoreboard</button>
-          </div>
-          <div id="log">a</div>
+        <div id="log">a</div>
+      </div>
+    </div> -->
+
+    <div id="playArea">
+      <!-- <div id="test">
+        How to play:
+        <p >
+            yayadsyfjsahfdlksasgfddddddddddddd
+        </p>
+    </div> -->
+      <div id="left">
+        <div id="FlashcardHint"></div>
+        <form id="form" v-on:submit="answerSubmitHandler">
+          <!-- <label> Check Answers </label> -->
+          <input
+            type="text"
+            placeholder="Answer Here"
+            id="answerInput"
+            v-model="answerInput"
+          />
+          <input type="submit" id="submit" />
+        </form>
+      </div>
+      <div id="right">
+        <div id="timer">
+          <p>thing</p>
+          <button v-on:click="sortScoreboard">Sort Scoreboard</button>
+          <ul>
+            <li v-for="item in scores" v-bind:key="(item.name, item.score)">
+              <p>{{ item.name }}: {{ item.score }}</p>
+            </li>
+          </ul>
+        </div>
+
+        <div id="log">
+          <p>log</p>
         </div>
       </div>
+    </div>
 
-      <div id="notVideo">
-        <!-- mute -->
-        <button
-          id="muteButton"
-          class="iconButtons"
-          v-if="micOn"
-          v-on:click="mute"
-        >
-          <img src="../assets/microphone.png" width="35" height="35" />
-        </button>
-        <button id="muteButton" class="iconButtons" v-else v-on:click="mute">
-          <img src="../assets/microphone-off.png" width="35" height="35" />
-        </button>
-        <!-- video  -->
-        <button
-          id="cameraButton"
-          class="iconButtons"
-          v-if="camOn"
-          v-on:click="cameraFlip"
-        >
-          <img src="../assets/camera.png" width="35" height="35" />
-        </button>
-        <button
-          id="cameraButton"
-          class="iconButtons"
-          v-else
-          v-on:click="cameraFlip"
-        >
-          <img src="../assets/camera-off.png" width="35" height="35" />
-        </button>
-      </div>
+    <div id="notVideo">
+      <!-- mute -->
+      <button
+        id="muteButton"
+        class="iconButtons"
+        v-if="micOn"
+        v-on:click="mute"
+      >
+        <img src="../assets/microphone.png" width="35" height="35" />
+      </button>
+      <button id="muteButton" class="iconButtons" v-else v-on:click="mute">
+        <img src="../assets/microphone-off.png" width="35" height="35" />
+      </button>
+      <!-- video  -->
+      <button
+        id="cameraButton"
+        class="iconButtons"
+        v-if="camOn"
+        v-on:click="cameraFlip"
+      >
+        <img src="../assets/camera.png" width="35" height="35" />
+      </button>
+      <button
+        id="cameraButton"
+        class="iconButtons"
+        v-else
+        v-on:click="cameraFlip"
+      >
+        <img src="../assets/camera-off.png" width="35" height="35" />
+      </button>
     </div>
   </div>
 </template>
@@ -109,6 +144,11 @@ export default {
       answerInput: "",
       collection: "",
       key: "",
+      scores: [
+        { name: "lesgo", score: 100 },
+        { name: "pull up", score: -10000 },
+        { name: "convertible", score: 12000 },
+      ],
     };
   },
   methods: {
@@ -176,6 +216,28 @@ export default {
           }
         });
     },
+    sortScoreboard(scores) {
+      scores = [
+        { name: "Jason", score: 500 },
+        { name: "Saarang", score: 1000 },
+        { name: "Jacob", score: 100 },
+        { name: "Atli", score: 0 },
+      ];
+      for (let i = 0; i < scores.length; i++) {
+        for (let j = 0; j < scores.length - 1; j++) {
+          if (scores[j].score < scores[j + 1].score) {
+            let tmp = scores[j];
+            scores[j] = scores[j + 1];
+            scores[j + 1] = tmp;
+          }
+        }
+      }
+      console.log(scores);
+      return scores;
+    },
   },
 };
 </script>
+
+<style src="../assets/css/Play.css">
+</style>

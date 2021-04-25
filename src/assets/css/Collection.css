@@ -1,0 +1,19 @@
+.small-li {
+    /* padding: 5px;
+    border: 1px solid #bbb;
+    box-shadow: 1px 2px 5px #00000099; */
+
+
+}
+.big-li {
+    text-emphasis: bold;
+    padding: 15px;
+    border: 1px solid #bbb;
+    box-shadow: 1px 2px 5px #00000099; 
+    border-radius: 2px;
+    margin: 20px;
+}
+
+li {
+    list-style-type: none;
+}
