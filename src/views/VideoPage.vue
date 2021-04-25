@@ -145,6 +145,7 @@ export default {
       collection: "",
       key: "",
       scores: [],
+      guesses: [],
     };
   },
   created() {
