@@ -29,7 +29,7 @@
   color: #fff;
   text-emphasis: none;
   text-decoration: none;
-  height: 60px;
+  /* height: 60px; */
 }
 
 #nav a:hover {
