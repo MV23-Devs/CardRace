@@ -286,16 +286,19 @@ export default {
           snapshot.docs.map((doc) => {
             this.cards.push({ key: doc.data().key, val: doc.data().val });
           });
+        })
+        .then(() => {
+          for (var i = this.cards.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var temp = this.cards[i];
+            this.cards[i] = this.cards[j];
+            this.cards[j] = temp;
+          }
+
+          console.log(this.cards[0]);
+
+          this.val = this.cards[0].val;
         });
-
-      for (var i = this.cards.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var temp = this.cards[i];
-        this.cards[i] = this.cards[j];
-        this.cards[j] = temp;
-      }
-
-      this.val = this.cards[0].val;
     },
 
     mute() {
@@ -366,29 +369,34 @@ export default {
       // let response = false;
 
       if (userInput == this.cards[0].key) {
-        console.log("Correct");
-      }
-      let score = 0;
+        this.cards.shift();
+        if(this.cards[0]) {
+          this.val = this.cards[0].val;
 
-      firebase
-        .firestore()
-        .collection("meetings")
-        .doc("please")
-        .collection("users")
-        .doc(this.user)
-        .get()
-        .then((doc) => {
-          score = doc.data().points;
-          firebase
-            .firestore()
-            .collection("meetings")
-            .doc("please")
-            .collection("users")
-            .doc(this.user)
-            .set({
-              points: score + 5,
-            });
-        });
+          // game is over
+        }
+        let score = 0;
+
+        firebase
+          .firestore()
+          .collection("meetings")
+          .doc("please")
+          .collection("users")
+          .doc(this.user)
+          .get()
+          .then((doc) => {
+            score = doc.data().points;
+            firebase
+              .firestore()
+              .collection("meetings")
+              .doc("please")
+              .collection("users")
+              .doc(this.user)
+              .set({
+                points: score + 5,
+              });
+          });
+      }
     },
     sortScoreboard(scores) {
       for (let i = 0; i < scores.length; i++) {

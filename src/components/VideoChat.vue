@@ -38,7 +38,7 @@
         >
         <el-button
           type="primary"
-          @click="leaveEvent"
+          @click.prevent="leaveEvent"
           plain
           :disabled="!disableJoin"
           >leave</el-button
@@ -221,6 +221,7 @@ export default {
       this.rtc
         .leaveChannel()
         .then(() => {
+          console.log(this.user)
           firebase
             .firestore()
             .collection("meetings")
